@@ -1,4 +1,6 @@
 package com.java55.supermarktitvitae.customer;
 
-public interface CustomerRepository {
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CustomerRepository extends JpaRepository<Customer, String> {
 }
