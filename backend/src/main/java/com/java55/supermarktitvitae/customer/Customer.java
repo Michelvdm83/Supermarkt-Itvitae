@@ -11,11 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Customer {
-
-    private String name;
-
     @Id
     private String email;
-
+    private String name;
     private String password;
 }
