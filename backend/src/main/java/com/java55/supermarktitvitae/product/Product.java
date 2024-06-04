@@ -11,7 +11,7 @@ public class Product {
     private String name;
     private double price;
     private String description;
-    private enum Category{};
+    private Category category;
     private Double salesPrice;
 
 
