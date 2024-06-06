@@ -20,15 +20,15 @@ public class ShoppingCartProduct {
     @GeneratedValue
     private UUID id;
 
-    private ShoppingCart shoppingCart;
-    private Product product;
+    //private ShoppingCart shoppingCart;
+    // private Product product;
 
     @Setter
     private int quantity;
 
-    public ShoppingCartProduct (ShoppingCart shoppingCart, Product product, int quantity) {
-        this.shoppingCart = shoppingCart;
-        this.product = product;
+    public ShoppingCartProduct(ShoppingCart shoppingCart, Product product, int quantity) {
+        //  this.shoppingCart = shoppingCart;
+        // this.product = product;
         this.quantity = quantity;
     }
 
