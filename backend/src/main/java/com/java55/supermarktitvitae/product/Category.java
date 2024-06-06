@@ -4,5 +4,9 @@ public enum Category {
     GROENTE,
     FRUIT,
     VLEES,
-    ZUIVEL
+    ZUIVEL,
+    DRANKEN,
+    GROENTEN,
+    BAKKERIJ,
+    SNACKS
 }
