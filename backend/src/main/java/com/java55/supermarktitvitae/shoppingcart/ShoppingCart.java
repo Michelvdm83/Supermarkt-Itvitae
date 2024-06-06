@@ -3,10 +3,7 @@ package com.java55.supermarktitvitae.shoppingcart;
 
 import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProduct;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -23,6 +20,7 @@ public class ShoppingCart {
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne
     private Customer customer;
 
     @OneToMany(mappedBy = "shoppingCart")
