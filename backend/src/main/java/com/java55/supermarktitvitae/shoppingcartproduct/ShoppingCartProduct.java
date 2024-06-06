@@ -5,6 +5,7 @@ import com.java55.supermarktitvitae.shoppingcart.ShoppingCart;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,13 +21,16 @@ public class ShoppingCartProduct {
     @GeneratedValue
     private UUID id;
 
+    @ManyToOne
     private ShoppingCart shoppingCart;
+
+    @ManyToOne
     private Product product;
 
     @Setter
     private int quantity;
 
-    public ShoppingCartProduct (ShoppingCart shoppingCart, Product product, int quantity) {
+    public ShoppingCartProduct(ShoppingCart shoppingCart, Product product, int quantity) {
         this.shoppingCart = shoppingCart;
         this.product = product;
         this.quantity = quantity;
