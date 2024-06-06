@@ -1,10 +1,8 @@
 package com.java55.supermarktitvitae.shoppingcart;
 
+import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProduct;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,8 +19,8 @@ public class ShoppingCart {
     @GeneratedValue
     private UUID id;
 
-    //Nog geen customer klasse, later nog even veranderen
-    private String customer;
+    @ManyToOne
+    private Customer customer;
 
     @OneToMany(mappedBy = "shoppingCart")
     private final Set<ShoppingCartProduct> products = new HashSet<>();
@@ -30,9 +28,7 @@ public class ShoppingCart {
     @Setter
     private boolean isPayed;
 
-
-    // Hier ook nog even string naar customer
-    public ShoppingCart(String customer) {
+    public ShoppingCart(Customer customer) {
         this.customer = customer;
         isPayed = false;
     }
