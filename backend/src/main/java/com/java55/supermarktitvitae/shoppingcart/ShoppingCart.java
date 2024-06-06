@@ -1,5 +1,6 @@
 package com.java55.supermarktitvitae.shoppingcart;
 
+import com.java55.supermarktitvitae.customer.Customer;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
@@ -17,15 +18,12 @@ public class ShoppingCart {
     @GeneratedValue
     private UUID id;
 
-    //Nog geen customer klasse, later nog even veranderen
-    private String customer;
+    private Customer customer;
 
     @Setter
     private boolean isPayed;
 
-
-    // Hier ook nog even string naar customer
-    public ShoppingCart(String customer) {
+    public ShoppingCart(Customer customer) {
         this.customer = customer;
         isPayed = false;
     }
