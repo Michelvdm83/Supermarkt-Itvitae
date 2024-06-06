@@ -1,4 +1,4 @@
-package com.java55.supermarktitvitae.Manager;
+package com.java55.supermarktitvitae.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.CrossOrigin;
