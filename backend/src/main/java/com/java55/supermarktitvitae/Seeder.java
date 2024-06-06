@@ -1,5 +1,7 @@
 package com.java55.supermarktitvitae;
 
+import com.java55.supermarktitvitae.customer.Customer;
+import com.java55.supermarktitvitae.customer.CustomerRepository;
 import com.java55.supermarktitvitae.manager.Manager;
 import com.java55.supermarktitvitae.manager.ManagerRepository;
 import com.java55.supermarktitvitae.product.Category;
@@ -16,6 +18,7 @@ import java.util.List;
 public class Seeder implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ManagerRepository managerRepository;
+    private final CustomerRepository customerRepository;
 
     @Override
     public void run(String... args) throws Exception {
@@ -108,6 +111,16 @@ public class Seeder implements CommandLineRunner {
                     new Manager("margretheartcows@outlook.com", "Margret Naaktgeboren", "1234")
             );
             managerRepository.saveAll(managers);
+        }
+        if (customerRepository.count() == 0) {
+            List<Customer> customers = List.of(
+                    new Customer("emily.clarkson@gmail.com", "Emily Clarkson", "1234"),
+                    new Customer("raj.patel@yahoo.com", "Raj Patel", "1234"),
+                    new Customer("li.mei@outlook.com", "Li Mei", "1234"),
+                    new Customer("ahmed.khan@hotmail.com", "Ahmed Khan", "1234"),
+                    new Customer("sofia.rossi@gmail.com", "Sofia Rossi", "1234")
+            );
+            customerRepository.saveAll(customers);
         }
     }
 }
