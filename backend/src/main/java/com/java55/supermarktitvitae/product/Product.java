@@ -19,7 +19,4 @@ public class Product {
     private String description;
     private Category category;
     private Double salesPrice;
-
-
-
 }
