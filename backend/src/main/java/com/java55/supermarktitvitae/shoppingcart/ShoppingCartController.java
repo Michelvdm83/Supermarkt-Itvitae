@@ -30,29 +30,27 @@ public class ShoppingCartController {
         return possibleShoppingCart.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    @PostMapping("{customerEmail}/{productName}/{quantity}")
+    @PostMapping
     public ResponseEntity<ShoppingCart> AddProduct(
-            @PathVariable String customerEmail,
-            @PathVariable String productName,
-            @PathVariable int quantity,
-            
+            @RequestBody ShoppingCartDto shoppingCartDto,
             UriComponentsBuilder ucb
     ) {
-        if (customerEmail == null) return ResponseEntity.notFound().build();
-        if (productName == null) return ResponseEntity.notFound().build();
+        if (shoppingCartDto.customerEmail() == null) return ResponseEntity.notFound().build();
+        if (shoppingCartDto.productName() == null) return ResponseEntity.notFound().build();
+        if (shoppingCartDto.quantity() == null) return ResponseEntity.notFound().build();
 
-        var possibleCustomer = customerRepository.findById(customerEmail);
+        var possibleCustomer = customerRepository.findById(shoppingCartDto.customerEmail());
         if (possibleCustomer.isEmpty()) return ResponseEntity.notFound().build();
         Customer customer = possibleCustomer.get();
 
         ShoppingCart shoppingCart = new ShoppingCart(customer);
         ShoppingCart savedShoppingCart = shoppingCartRepository.save(shoppingCart);
 
-        var possibleProduct = productRepository.findByName(productName);
+        var possibleProduct = productRepository.findByName(shoppingCartDto.productName());
         if (possibleProduct.isEmpty()) return ResponseEntity.notFound().build();
         Product product = possibleProduct.get();
 
-        ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, quantity);
+        ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, shoppingCartDto.quantity());
         shoppingCartProductRepository.save(shoppingCartProduct);
 
         var uri = ucb.path("api/v1/shoppingcarts/{id}").buildAndExpand(shoppingCart.getId()).toUri();
