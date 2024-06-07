@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
-
+import "./SearchBar.css";
 
 export default function SearchBar() {
 
@@ -22,7 +22,7 @@ export default function SearchBar() {
             value={text}
             onChange={(event) => setText(event.target.value)}
             />
-            <button onClick={search}>Zoek</button>
+            <button className="searchbar-button" onClick={search}>Zoek</button>
         </div>
     )
 }
