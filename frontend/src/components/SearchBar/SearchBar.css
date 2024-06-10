@@ -1,0 +1,15 @@
+.searchbar {
+    display: flex;
+    border: none;
+    border-radius: 2px;
+    border-width: 2px;
+    
+}
+
+.searchbar-button {
+    display: flex;
+    border-color: rgba(39, 128, 128);
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: rgb(52, 192, 192);;
+}
