@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 export default function ProductPage() {
-  const [product, setProduct] = useState([]);
+  const [product, setProduct] = useState({});
   const { productName } = useParams();
 
   useEffect(getProduct, []);
@@ -23,10 +23,10 @@ export default function ProductPage() {
 
   return (
     <>
-      <ul>
-        <li>{product.name}</li>
-        <li>{productPrice(product)}</li>
-      </ul>
+      <p>{product.name}</p>
+      <p>{productPrice(product)}</p>
+      <p>{product.category}</p>
+      <p>{product.description}</p>
     </>
   );
 }
