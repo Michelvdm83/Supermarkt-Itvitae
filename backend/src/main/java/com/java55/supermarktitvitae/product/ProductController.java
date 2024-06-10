@@ -1,12 +1,24 @@
 package com.java55.supermarktitvitae.product;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/v1/products")
 @RequiredArgsConstructor
+@CrossOrigin("http://localhost:5173")
 public class ProductController {
+
     private final ProductRepository productRepository;
+
+    @GetMapping("/searchbar")
+    public List<Product> searchProductByName(@RequestParam String contains) {
+
+        return productRepository.findByNameContainsIgnoreCase(contains);
+
+    }
+
 }
