@@ -16,7 +16,7 @@ export default function ProductPage() {
   }
 
   function productPrice(productToCheck) {
-    return productToCheck.salesPrice > 0
+    return productToCheck.salesPrice
       ? productToCheck.salesPrice
       : productToCheck.price;
   }
