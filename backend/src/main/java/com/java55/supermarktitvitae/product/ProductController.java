@@ -5,7 +5,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
 import java.util.Optional;
 
 @RestController
@@ -13,6 +12,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @CrossOrigin("http://localhost:5173")
 public class ProductController {
+
     private final ProductRepository productRepository;
 
     @GetMapping("/searchbar")
@@ -21,7 +21,6 @@ public class ProductController {
         return productRepository.findByNameContainsIgnoreCase(contains);
 
     }
-
 
     @GetMapping("/{name}")
     public ResponseEntity<Product> getProductByName(@PathVariable String name) {
