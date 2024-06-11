@@ -23,15 +23,20 @@ public class ShoppingCartController {
     private final ShoppingCartProductRepository shoppingCartProductRepository;
 
     @GetMapping("{id}")
-    public ResponseEntity<ShoppingCart> GetById(@PathVariable UUID id) {
+    public ResponseEntity<ShoppingCartDto> GetById(@PathVariable UUID id) {
         if (id == null) return ResponseEntity.badRequest().build();
 
         var possibleShoppingCart = shoppingCartRepository.findById(id);
-        return possibleShoppingCart.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
+        if (possibleShoppingCart.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        ShoppingCart shoppingCart = possibleShoppingCart.get();
+
+        return ResponseEntity.ok(ShoppingCartDto.from(shoppingCart));
     }
 
     @PostMapping
-    public ResponseEntity<ShoppingCart> AddProduct(
+    public ResponseEntity<ShoppingCartDto> AddProduct(
             @RequestBody ShoppingCartAddProductDto shoppingCartAddProductDto,
             UriComponentsBuilder ucb
     ) {
@@ -62,9 +67,9 @@ public class ShoppingCartController {
         ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, shoppingCartAddProductDto.quantity());
         shoppingCartProductRepository.save(shoppingCartProduct);
 
+        shoppingCart.addProduct(shoppingCartProduct);
 
         var uri = ucb.path("api/v1/shoppingcarts/{id}").buildAndExpand(shoppingCart.getId()).toUri();
-        return ResponseEntity.created(uri).body();
+        return ResponseEntity.created(uri).body(ShoppingCartDto.from(shoppingCart));
     }
-
 }

@@ -33,4 +33,8 @@ public class ShoppingCart {
         isPayed = false;
     }
 
+
+    public void addProduct(ShoppingCartProduct shoppingCartProduct) {
+        shoppingCartProducts.add(shoppingCartProduct);
+    }
 }
