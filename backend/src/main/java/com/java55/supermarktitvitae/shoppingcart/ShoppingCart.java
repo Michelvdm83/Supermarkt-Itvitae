@@ -1,6 +1,5 @@
 package com.java55.supermarktitvitae.shoppingcart;
 
-
 import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProduct;
 import jakarta.persistence.*;
