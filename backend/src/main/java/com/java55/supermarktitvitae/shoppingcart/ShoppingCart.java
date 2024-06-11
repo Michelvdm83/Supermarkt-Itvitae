@@ -24,7 +24,7 @@ public class ShoppingCart {
     private Customer customer;
 
     @OneToMany(mappedBy = "shoppingCart")
-    private final Set<ShoppingCartProduct> products = new HashSet<>();
+    private final Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
 
     @Setter
     private boolean isPayed;

@@ -32,29 +32,39 @@ public class ShoppingCartController {
 
     @PostMapping
     public ResponseEntity<ShoppingCart> AddProduct(
-            @RequestBody ShoppingCartDto shoppingCartDto,
+            @RequestBody ShoppingCartAddProductDto shoppingCartAddProductDto,
             UriComponentsBuilder ucb
     ) {
-        if (shoppingCartDto.customerEmail() == null) return ResponseEntity.notFound().build();
-        if (shoppingCartDto.productName() == null) return ResponseEntity.notFound().build();
-        if (shoppingCartDto.quantity() == null) return ResponseEntity.notFound().build();
+        if (shoppingCartAddProductDto.customerEmail() == null) return ResponseEntity.notFound().build();
+        if (shoppingCartAddProductDto.productName() == null) return ResponseEntity.notFound().build();
+        if (shoppingCartAddProductDto.quantity() == null) return ResponseEntity.notFound().build();
 
-        var possibleCustomer = customerRepository.findById(shoppingCartDto.customerEmail());
+        var possibleCustomer = customerRepository.findById(shoppingCartAddProductDto.customerEmail());
         if (possibleCustomer.isEmpty()) return ResponseEntity.notFound().build();
         Customer customer = possibleCustomer.get();
 
-        ShoppingCart shoppingCart = new ShoppingCart(customer);
-        ShoppingCart savedShoppingCart = shoppingCartRepository.save(shoppingCart);
+        ShoppingCart shoppingCart;
 
-        var possibleProduct = productRepository.findByName(shoppingCartDto.productName());
+        if (shoppingCartAddProductDto.shoppingCartId() == null) {
+            shoppingCart = new ShoppingCart(customer);
+            shoppingCartRepository.save(shoppingCart);
+        } else {
+            if (shoppingCartRepository.findById(shoppingCartAddProductDto.shoppingCartId()).isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            shoppingCart = shoppingCartRepository.findById(shoppingCartAddProductDto.shoppingCartId()).get();
+        }
+
+        var possibleProduct = productRepository.findByName(shoppingCartAddProductDto.productName());
         if (possibleProduct.isEmpty()) return ResponseEntity.notFound().build();
         Product product = possibleProduct.get();
 
-        ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, shoppingCartDto.quantity());
+        ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, shoppingCartAddProductDto.quantity());
         shoppingCartProductRepository.save(shoppingCartProduct);
 
+
         var uri = ucb.path("api/v1/shoppingcarts/{id}").buildAndExpand(shoppingCart.getId()).toUri();
-        return ResponseEntity.created(uri).body(savedShoppingCart);
+        return ResponseEntity.created(uri).body();
     }
 
 }
