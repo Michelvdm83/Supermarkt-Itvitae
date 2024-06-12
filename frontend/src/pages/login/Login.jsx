@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function Login( {role} ) {
+    const navigate = useNavigate();
+
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
@@ -11,8 +14,9 @@ export default function Login( {role} ) {
     const TOKEN_STORAGE_LOCATION = 'JWT';
     const MAIN_URL_PART = 'http://localhost:8080/api/v1/';
 
+
     function login(event){
-        console.log(event);
+        event.preventDefault();
         
         if(password.length < 1){
             return;
@@ -32,7 +36,7 @@ export default function Login( {role} ) {
             sessionStorage.setItem(TOKEN_STORAGE_LOCATION, response.data.token);
             sessionStorage.setItem(USERNAME_STORAGE_LOCATION, response.data.name);
             setLoggedIn(true);
-            console.log(response);
+            navigate("/");
         }).catch (error => {
             console.log(error);
             setLoggedIn(false);
@@ -40,6 +44,9 @@ export default function Login( {role} ) {
     }
 
     return (
-        <LoginForm email={email} setEmail={setEmail} password={password} setPassword={setPassword} login={login}/>
+        <div className="flex flex-col justify-center content-center items-center gap-4 w-full h-full">
+            <LoginForm email={email} setEmail={setEmail} password={password} setPassword={setPassword} login={login}/>
+            <span onClick={() => navigate("/register") } >Klik hier om als nieuwe klant te registreren</span>
+        </div>
     );
 }
