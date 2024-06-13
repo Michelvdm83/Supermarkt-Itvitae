@@ -11,6 +11,8 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path="products/:productName" element={<ProductPage />} />
+        {/* apostrophes cant be ignored in the backend
+        for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
       </Routes>
     </div>
   );
