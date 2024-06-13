@@ -21,10 +21,15 @@ export default function ProductPage() {
       : productToCheck.price;
   }
 
+  const NLEuro = new Intl.NumberFormat("nl-NL", {
+    style: "currency",
+    currency: "EUR",
+  });
+
   return (
     <>
       <p>{product.name}</p>
-      <p>{productPrice(product)}</p>
+      <p>{NLEuro.format(productPrice(product))}</p>
       <p>{product.category}</p>
       <p>{product.description}</p>
     </>
