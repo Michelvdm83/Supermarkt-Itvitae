@@ -9,6 +9,7 @@ import com.java55.supermarktitvitae.product.Product;
 import com.java55.supermarktitvitae.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,6 +20,7 @@ public class Seeder implements CommandLineRunner {
     private final ProductRepository productRepository;
     private final ManagerRepository managerRepository;
     private final CustomerRepository customerRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -114,11 +116,11 @@ public class Seeder implements CommandLineRunner {
         }
         if (customerRepository.count() == 0) {
             List<Customer> customers = List.of(
-                    new Customer("emily.clarkson@gmail.com", "Emily Clarkson", "1234"),
-                    new Customer("raj.patel@yahoo.com", "Raj Patel", "1234"),
-                    new Customer("li.mei@outlook.com", "Li Mei", "1234"),
-                    new Customer("ahmed.khan@hotmail.com", "Ahmed Khan", "1234"),
-                    new Customer("sofia.rossi@gmail.com", "Sofia Rossi", "1234")
+                    new Customer("emily.clarkson@gmail.com", "Emily Clarkson", passwordEncoder.encode("1234")),
+                    new Customer("raj.patel@yahoo.com", "Raj Patel", passwordEncoder.encode("1234")),
+                    new Customer("li.mei@outlook.com", "Li Mei", passwordEncoder.encode("1234")),
+                    new Customer("ahmed.khan@hotmail.com", "Ahmed Khan", passwordEncoder.encode("1234")),
+                    new Customer("sofia.rossi@gmail.com", "Sofia Rossi", passwordEncoder.encode("1234"))
             );
             customerRepository.saveAll(customers);
         }
