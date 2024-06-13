@@ -1,9 +1,11 @@
 package com.java55.supermarktitvitae.product;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("api/v1/products")
@@ -25,4 +27,11 @@ public class ProductController {
         return productRepository.findBySalesPriceNotNull();
     }
 
+    @GetMapping("/{name}")
+    public ResponseEntity<Product> getProductByName(@PathVariable String name) {
+        name = name.replace("-", " ");
+        Optional<Product> product = productRepository.findByNameIgnoreCase(name);
+        if (product.isEmpty()) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(product.get());
+    }
 }
