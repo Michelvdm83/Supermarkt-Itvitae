@@ -1,7 +1,6 @@
 package com.java55.supermarktitvitae.product;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,6 +18,11 @@ public class ProductController {
 
         return productRepository.findByNameContainsIgnoreCase(contains);
 
+    }
+
+    @GetMapping("/sales")
+    public List<Product> getSales() {
+        return productRepository.findBySalesPriceNotNull();
     }
 
 }
