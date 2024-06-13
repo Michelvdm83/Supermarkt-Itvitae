@@ -4,8 +4,6 @@ import Sales from "./pages/Sales/Sales";
 import ProductPage from "./pages/ProductPage";
 import "./index.css";
 import "./App.css";
-import { Routes, Route, useNavigate } from "react-router-dom";
-import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Login from "./pages/login/Login";
 
 export default function App() {
