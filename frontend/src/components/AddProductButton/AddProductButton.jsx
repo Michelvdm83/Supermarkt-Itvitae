@@ -1,7 +1,8 @@
 export default function AddProductButton() {
+  //Needs to route to product page
   return (
-    <div className="bg-nn-orange mt-20 flex rounded-2xl h-10 mr-2 w-12 justify-center items-center">
-      <button>+</button>
-    </div>
+    <button className="bg-nn-pink text-white rounded-2xl font-extrabold h-10 w-12 mr-2 mt-16 flex justify-center items-center">
+      +
+    </button>
   );
 }

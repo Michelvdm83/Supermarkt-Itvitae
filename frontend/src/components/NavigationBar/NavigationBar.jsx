@@ -3,7 +3,7 @@ import SearchBar from "../SearchBar/SearchBar";
 
 export default function NavigationBar() {
   return (
-    <div className="border-nn-orange h-28 w-screen flex border-4 rounded-2xl shadow-xl justify-around items-center content-center">
+    <div className=" bg-white flex-wrap min-w-fit inset-y-0 sticky h-28 w-screen flex border-4 rounded-2xl shadow-xl justify-around items-center content-center">
       <NavigationBarItem title="Home" page="home" />
       <NavigationBarItem title="Producten" page="products" />
       <NavigationBarItem title="Aanbiedingen" page="sales" />
