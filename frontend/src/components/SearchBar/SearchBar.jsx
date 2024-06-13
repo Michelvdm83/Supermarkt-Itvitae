@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import "./SearchBar.css";
 
 export default function SearchBar({ setSearchResults }) {
   const navigate = useNavigate();
