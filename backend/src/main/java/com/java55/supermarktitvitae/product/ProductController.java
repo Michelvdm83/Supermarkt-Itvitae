@@ -18,8 +18,7 @@ public class ProductController {
     @GetMapping("/searchbar")
     public List<Product> searchProductByName(@RequestParam String contains) {
 
-        return productRepository.findByNameContainsIgnoreCase(contains);
-
+        return productRepository.findByNameContainsIgnoreCaseOrderByName(contains);
     }
 
     @GetMapping("/sales")

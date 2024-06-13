@@ -1,14 +1,18 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
-export default function SearchBar() {
+export default function SearchBar({ setSearchResults }) {
+  const navigate = useNavigate();
+
   const [text, setText] = useState("");
 
   function search() {
     axios
       .get("http://localhost:8080/api/v1/products/searchbar?contains=" + text)
       .then((response) => {
-        console.log(response);
+        setSearchResults(response.data);
+        navigate("/zoeken");
       });
   }
 
