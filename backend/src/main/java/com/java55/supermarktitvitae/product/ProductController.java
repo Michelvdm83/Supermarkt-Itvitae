@@ -1,7 +1,6 @@
 package com.java55.supermarktitvitae.product;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,8 +16,7 @@ public class ProductController {
     @GetMapping("/searchbar")
     public List<Product> searchProductByName(@RequestParam String contains) {
 
-        return productRepository.findByNameContainsIgnoreCase(contains);
-
+        return productRepository.findByNameContainsIgnoreCaseOrderByName(contains);
     }
 
 }
