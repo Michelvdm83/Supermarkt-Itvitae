@@ -22,6 +22,11 @@ public class ProductController {
 
     }
 
+    @GetMapping("/sales")
+    public List<Product> getSales() {
+        return productRepository.findBySalesPriceNotNull();
+    }
+
     @GetMapping("/{name}")
     public ResponseEntity<Product> getProductByName(@PathVariable String name) {
         name = name.replace("-", " ");

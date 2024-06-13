@@ -1,11 +1,14 @@
 import { useNavigate } from "react-router-dom";
-import "./NavigationBarItem.css";
 
-export default function NavigationBarItem( { title, page }) {
+export default function NavigationBarItem({ title, page }) {
+  const navigate = useNavigate();
 
-    const navigate = useNavigate();
-
-    return (
-        <button className="navigationbar-item" onClick={() => navigate("/" + page)}>{title}</button>
-    )
+  return (
+    <button
+      className="border-nn-orange px-2 border-2 rounded-2xl"
+      onClick={() => navigate("/" + page)}
+    >
+      {title}
+    </button>
+  );
 }

@@ -9,5 +9,7 @@ public interface ProductRepository extends JpaRepository<Product, String> {
 
     List<Product> findByNameContainsIgnoreCase(String contains);
 
+    List<Product> findBySalesPriceNotNull();
+
     Optional<Product> findByNameIgnoreCase(String name);
 }
