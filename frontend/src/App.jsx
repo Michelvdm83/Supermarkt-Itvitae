@@ -7,14 +7,12 @@ function App() {
   const navigate = useNavigate();
 
   return (
-    <>
-      <div className="container">
-        <NavigationBar />
-      </div>
+    <div className="container">
+      <NavigationBar />
       <Routes>
         <Route path="products/:productName" element={<ProductPage />} />
       </Routes>
-    </>
+    </div>
   );
 }
 
