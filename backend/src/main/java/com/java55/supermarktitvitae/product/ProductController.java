@@ -24,6 +24,7 @@ public class ProductController {
 
     @GetMapping("/{name}")
     public ResponseEntity<Product> getProductByName(@PathVariable String name) {
+        name = name.replace("-", " ");
         Optional<Product> product = productRepository.findByName(name);
         if (product.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(product.get());
