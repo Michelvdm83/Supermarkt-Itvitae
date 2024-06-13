@@ -48,16 +48,14 @@ public class ShoppingCartController {
         if (possibleCustomer.isEmpty()) return ResponseEntity.notFound().build();
         Customer customer = possibleCustomer.get();
 
-        ShoppingCart shoppingCart;
+        ShoppingCart shoppingCart = null;
 
-        if (shoppingCartAddProductDto.shoppingCartId() == null) {
+        var possibleShoppingCarts = shoppingCartRepository.findByCustomerAndIsPayed(customer, false);
+        if (possibleShoppingCarts.isEmpty()) {
             shoppingCart = new ShoppingCart(customer);
             shoppingCartRepository.save(shoppingCart);
         } else {
-            if (shoppingCartRepository.findById(shoppingCartAddProductDto.shoppingCartId()).isEmpty()) {
-                return ResponseEntity.notFound().build();
-            }
-            shoppingCart = shoppingCartRepository.findById(shoppingCartAddProductDto.shoppingCartId()).get();
+            shoppingCart = possibleShoppingCarts.get();
         }
 
         var possibleProduct = productRepository.findByName(shoppingCartAddProductDto.productName());

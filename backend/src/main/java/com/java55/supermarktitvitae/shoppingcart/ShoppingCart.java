@@ -26,13 +26,13 @@ public class ShoppingCart {
     private final Set<ShoppingCartProduct> shoppingCartProducts = new HashSet<>();
 
     @Setter
+    @Getter
     private boolean isPayed;
 
     public ShoppingCart(Customer customer) {
         this.customer = customer;
         isPayed = false;
     }
-
 
     public void addProduct(ShoppingCartProduct shoppingCartProduct) {
         shoppingCartProducts.add(shoppingCartProduct);
