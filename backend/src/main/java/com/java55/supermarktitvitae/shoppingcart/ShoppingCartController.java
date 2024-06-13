@@ -8,6 +8,7 @@ import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProduct;
 import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -38,15 +39,17 @@ public class ShoppingCartController {
     @PostMapping
     public ResponseEntity<ShoppingCartDto> AddProduct(
             @RequestBody ShoppingCartAddProductDto shoppingCartAddProductDto,
-            UriComponentsBuilder ucb
+            UriComponentsBuilder ucb,
+            Authentication authentication
     ) {
-        if (shoppingCartAddProductDto.customerEmail() == null) return ResponseEntity.notFound().build();
+        Customer customer = (Customer) authentication.getPrincipal();
+//        if (shoppingCartAddProductDto.customerEmail() == null) return ResponseEntity.notFound().build();
         if (shoppingCartAddProductDto.productName() == null) return ResponseEntity.notFound().build();
         if (shoppingCartAddProductDto.quantity() == null) return ResponseEntity.notFound().build();
 
-        var possibleCustomer = customerRepository.findById(shoppingCartAddProductDto.customerEmail());
-        if (possibleCustomer.isEmpty()) return ResponseEntity.notFound().build();
-        Customer customer = possibleCustomer.get();
+//        var possibleCustomer = customerRepository.findById(shoppingCartAddProductDto.customerEmail());
+//        if (possibleCustomer.isEmpty()) return ResponseEntity.notFound().build();
+//        Customer customer = possibleCustomer.get();
 
         ShoppingCart shoppingCart = null;
 

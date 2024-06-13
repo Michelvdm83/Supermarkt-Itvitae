@@ -32,6 +32,9 @@ export default function ProductPage() {
       <p>{NLEuro.format(productPrice(product))}</p>
       <p>{product.category}</p>
       <p>{product.description}</p>
+      <p>
+        <button class=" bottom-auto">Add to cart</button>
+      </p>
     </>
   );
 }
