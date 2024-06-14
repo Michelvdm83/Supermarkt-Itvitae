@@ -17,14 +17,18 @@ export default function SearchBar({ setSearchResults }) {
   }
 
   return (
-    <div className="searchbar">
+    <div className="border-nn-green min-w-fit border-2 rounded-2xl">
       <input
+        className="ml-4"
         type="text"
         placeholder="Zoeken..."
         value={text}
         onChange={(event) => setText(event.target.value)}
       />
-      <button className="searchbar-button" onClick={search}>
+      <button
+        className="bg-nn-green rounded-2xl h-7 w-12 justify-center items-center"
+        onClick={search}
+      >
         Zoek
       </button>
     </div>
