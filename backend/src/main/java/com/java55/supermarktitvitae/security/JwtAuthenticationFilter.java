@@ -2,6 +2,7 @@ package com.java55.supermarktitvitae.security;
 
 import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.customer.CustomerRepository;
+import com.java55.supermarktitvitae.manager.ManagerRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import java.util.Optional;
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final CustomerRepository customerRepository;
+    private final ManagerRepository managerRepository;
     private final JwtService jwtService;
 
     private static final String AUTHORIZATION_HEADER_NAME = "Authorization";
@@ -73,6 +75,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return Optional.empty();
         }
 
+        var possibleToken = jwtService.readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length())).filter(token -> !token.isExpired());
+        if (possibleToken.isEmpty()) {
+            throw new RuntimeException("error on token");
+        }
         return jwtService
                 .readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length()))
                 .filter(token -> !token.isExpired())
