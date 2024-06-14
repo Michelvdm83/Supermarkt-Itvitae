@@ -5,7 +5,7 @@ export default function NavigationBarItem({ title, page }) {
 
   return (
     <button
-      className=" text-nn-green font-medium "
+      className=" text-nn-green text-xl font-medium "
       onClick={() => navigate("/" + page)}
     >
       {title}
