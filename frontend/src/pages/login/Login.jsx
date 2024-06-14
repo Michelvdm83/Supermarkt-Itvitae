@@ -40,7 +40,7 @@ export default function Login({ role }) {
         sessionStorage.setItem(USERNAME_STORAGE_LOCATION, response.data.name);
         sessionStorage.setItem(ROLE_STORAGE_LOCATION, response.data.role);
         setLoggedIn(true);
-        navigate("/");
+        navigate("/account");
       })
       .catch((error) => {
         alert(error.response.data.detail);
