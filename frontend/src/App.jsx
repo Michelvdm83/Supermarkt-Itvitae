@@ -15,11 +15,9 @@ export default function App() {
       <Routes>
         <Route path="/sales" element={<Sales />} />
         <Route path="products/:productName" element={<ProductPage />} />
+        <Route path="/login" element={<Login role="customer" />} />
         {/* apostrophes cant be ignored in the backend
         for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
-      </Routes>
-      <Routes>
-        <Route path="/login" element={<Login role="customer" />} />
       </Routes>
     </div>
   );
