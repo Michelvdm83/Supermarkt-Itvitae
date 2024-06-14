@@ -5,6 +5,7 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function Login({ role }) {
   const navigate = useNavigate();
+  const title = (role === "manager" ? "Manager" : "Klant") + " login";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,6 +51,7 @@ export default function Login({ role }) {
 
   return (
     <div className="flex flex-col justify-center content-center items-center gap-4 w-full h-full">
+      <h1>{title}</h1>
       <LoginForm
         email={email}
         setEmail={setEmail}
@@ -57,15 +59,19 @@ export default function Login({ role }) {
         setPassword={setPassword}
         login={login}
       />
-      <span className="cursor-pointer" onClick={() => navigate("/register")}>
-        Klik hier om als nieuwe klant te registreren
-      </span>
-      <span
-        className="cursor-pointer"
-        onClick={() => navigate("/login-manager")}
-      >
-        Klik hier voor Manager login
-      </span>
+      {role === "customer" && (
+        <span className="cursor-pointer" onClick={() => navigate("/register")}>
+          Klik hier om als nieuwe klant te registreren
+        </span>
+      )}
+      {role === "customer" && (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate("/login-manager")}
+        >
+          Klik hier voor Manager login
+        </span>
+      )}
     </div>
   );
 }
