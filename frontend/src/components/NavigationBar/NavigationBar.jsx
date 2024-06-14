@@ -9,7 +9,11 @@ export default function NavigationBar() {
       <NavigationBarItem title="Aanbiedingen" page="sales" />
       <SearchBar />
       {/*hier logica inloggen/registreren of persoonlijke pagina + 1 of 2 knoppen*/}
-      <NavigationBarItem title="Inloggen/Registreren" page="login" />
+      {sessionStorage.getItem("JWT") ? (
+        <NavigationBarItem title="Account" page="account" />
+      ) : (
+        <NavigationBarItem title="Inloggen/Registreren" page="login" />
+      )}
       <NavigationBarItem title="Winkelmandje" page="shoppingcart" />
     </div>
   );
