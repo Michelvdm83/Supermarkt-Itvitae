@@ -1,4 +1,4 @@
-package com.java55.supermarktitvitae.product;
+package com.java55.supermarktitvitae.category;
 
 public enum Category {
     GROENTE,

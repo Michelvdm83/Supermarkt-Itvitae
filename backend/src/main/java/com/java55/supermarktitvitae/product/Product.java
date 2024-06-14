@@ -1,5 +1,6 @@
 package com.java55.supermarktitvitae.product;
 
+import com.java55.supermarktitvitae.category.Category;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
