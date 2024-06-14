@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("api/v1/shoppingcarts")
+@CrossOrigin("http://localhost:5173")
 @RequiredArgsConstructor
 public class ShoppingCartController {
     private final ShoppingCartRepository shoppingCartRepository;
@@ -43,13 +44,8 @@ public class ShoppingCartController {
             Authentication authentication
     ) {
         Customer customer = (Customer) authentication.getPrincipal();
-//        if (shoppingCartAddProductDto.customerEmail() == null) return ResponseEntity.notFound().build();
         if (shoppingCartAddProductDto.productName() == null) return ResponseEntity.notFound().build();
         if (shoppingCartAddProductDto.quantity() == null) return ResponseEntity.notFound().build();
-
-//        var possibleCustomer = customerRepository.findById(shoppingCartAddProductDto.customerEmail());
-//        if (possibleCustomer.isEmpty()) return ResponseEntity.notFound().build();
-//        Customer customer = possibleCustomer.get();
 
         ShoppingCart shoppingCart = null;
 

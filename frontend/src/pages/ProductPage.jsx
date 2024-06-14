@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function ProductPage() {
   const [product, setProduct] = useState({});
   const { productName } = useParams();
+  const [quantity, setQuantity] = useState(1);
 
   useEffect(getProduct, []);
 
@@ -20,11 +22,37 @@ export default function ProductPage() {
       ? productToCheck.salesPrice
       : productToCheck.price;
   }
+  const addProductToCart = () => {
+    axios
+      .post(
+        "http://localhost:8080/api/v1/shoppingcarts",
+        {
+          productName: product.name,
+          quantity: quantity,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + window.sessionStorage.getItem("JWT"),
+          },
+        }
+      )
+      .then(() => {
+        setQuantity(1);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  };
 
   const NLEuro = new Intl.NumberFormat("nl-NL", {
     style: "currency",
     currency: "EUR",
   });
+
+  const log = (quantity) => {
+    console.log(quantity);
+  };
 
   return (
     <>
@@ -33,7 +61,15 @@ export default function ProductPage() {
       <p>{product.category}</p>
       <p>{product.description}</p>
       <p>
-        <button class=" bottom-auto">Add to cart</button>
+        <input
+          value={quantity}
+          onChange={(e) => setQuantity(e.target.value)}
+        ></input>
+      </p>
+      <p>
+        <button onClick={addProductToCart} className="bottom-auto">
+          Add to cart
+        </button>
       </p>
     </>
   );
