@@ -1,22 +1,49 @@
-import AddProductButton from "../AddProductButton/AddProductButton";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductBox({ product }) {
+  const navigate = useNavigate();
+
+  function getPrice() {
+    if (product.salesPrice != null) {
+      return (
+        <>
+          <p className="text-nn-pink font-bold text-xl">
+            {NLEuro.format(productPrice(product))}
+          </p>
+          <p className="line-through">{NLEuro.format(productPrice(product))}</p>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <p className="font-medium">{NLEuro.format(productPrice(product))}</p>
+        </>
+      );
+    }
+  }
+
+  function productPrice(productToCheck) {
+    return productToCheck.salesPrice
+      ? productToCheck.salesPrice
+      : productToCheck.price;
+  }
+
+  const NLEuro = new Intl.NumberFormat("nl-NL", {
+    style: "currency",
+    currency: "EUR",
+  });
+
   return (
-    <div className="border-nn-orange h-32 gap-8 flex border-2 rounded-2xl shadow-xl">
-      {/* <img
-        className="border-4 w-28 h-28 ml-4 mt-2"
-        src="src\images\img_not_found.png"
-      ></img> */}
-      <div className="mt-4 mb-2 ml-8 w-1/2 flex flex-col justify-center">
-        <h3 className="text-lg font-medium">{product.name}</h3>
-        <p>{product.description}</p>
+    <button onClick={() => navigate("/products/" + product.name)}>
+      <div className="min-w-fit border-2 rounded-2xl shadow-xl h-32 gap-8 flex">
+        <div className="my-4 ml-8 w-1/2 flex flex-col justify-center items-start">
+          <h3 className="text-lg font-medium m-0  mr-0">{product.name}</h3>
+          <p>{product.description}</p>
+        </div>
+        <div className="mb-2 gap-2 mt-16 w-12 flex justify-center items-center">
+          {getPrice()}
+        </div>
       </div>
-      <div className="mb-2 mt-16 flex  w-12 justify-center items-center">
-        <p>€{product.salesPrice}</p>
-      </div>
-      <div>
-        <AddProductButton />
-      </div>
-    </div>
+    </button>
   );
 }

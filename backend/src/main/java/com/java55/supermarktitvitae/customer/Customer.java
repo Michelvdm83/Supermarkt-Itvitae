@@ -24,9 +24,15 @@ public class Customer implements UserDetails {
     private String name;
     private String password;
 
+    private final String ROLE = "customer";
+
+    public String getRole() {
+        return ROLE;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_customer"));
+        return List.of(new SimpleGrantedAuthority("ROLE_" + ROLE));
     }
 
     @Override

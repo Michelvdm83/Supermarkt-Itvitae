@@ -5,6 +5,7 @@ import LoginForm from "../../components/LoginForm/LoginForm";
 
 export default function Login({ role }) {
   const navigate = useNavigate();
+  const title = (role === "manager" ? "Manager" : "Klant") + " login";
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,6 +13,7 @@ export default function Login({ role }) {
 
   const USERNAME_STORAGE_LOCATION = "USERNAME";
   const TOKEN_STORAGE_LOCATION = "JWT";
+  const ROLE_STORAGE_LOCATION = "ROLE";
   const MAIN_URL_PART = "http://localhost:8080/api/v1/";
 
   function login(event) {
@@ -37,17 +39,19 @@ export default function Login({ role }) {
       .then((response) => {
         sessionStorage.setItem(TOKEN_STORAGE_LOCATION, response.data.token);
         sessionStorage.setItem(USERNAME_STORAGE_LOCATION, response.data.name);
+        sessionStorage.setItem(ROLE_STORAGE_LOCATION, response.data.role);
         setLoggedIn(true);
-        navigate("/");
+        navigate("/account");
       })
       .catch((error) => {
-        console.log(error);
+        alert(error.response.data.detail);
         setLoggedIn(false);
       });
   }
 
   return (
     <div className="flex flex-col justify-center content-center items-center gap-4 w-full h-full">
+      <h1>{title}</h1>
       <LoginForm
         email={email}
         setEmail={setEmail}
@@ -55,9 +59,19 @@ export default function Login({ role }) {
         setPassword={setPassword}
         login={login}
       />
-      <span onClick={() => navigate("/register")}>
-        Klik hier om als nieuwe klant te registreren
-      </span>
+      {role === "customer" && (
+        <span className="cursor-pointer" onClick={() => navigate("/register")}>
+          Klik hier om als nieuwe klant te registreren
+        </span>
+      )}
+      {role === "customer" && (
+        <span
+          className="cursor-pointer"
+          onClick={() => navigate("/login-manager")}
+        >
+          Klik hier voor Manager login
+        </span>
+      )}
     </div>
   );
 }
