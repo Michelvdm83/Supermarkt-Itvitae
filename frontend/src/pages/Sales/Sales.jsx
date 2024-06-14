@@ -10,7 +10,6 @@ export default function Sales() {
     axios
       .get("http://localhost:8080/api/v1/products/sales")
       .then((response) => {
-        console.log(response.data);
         setSales(response.data);
       })
       .catch((error) => {
