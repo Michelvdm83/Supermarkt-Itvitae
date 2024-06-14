@@ -7,6 +7,7 @@ import "./App.css";
 import Login from "./pages/login/Login";
 import { useState } from "react";
 import ProductSearch from "./pages/productsearch/ProductSearch";
+import Account from "./pages/account/Account";
 
 export default function App() {
   const navigate = useNavigate();
@@ -26,6 +27,7 @@ export default function App() {
           path="/zoeken"
           element={<ProductSearch searchResults={searchResults} />}
         />
+        <Route path="/account" element={<Account />} />
       </Routes>
     </div>
   );

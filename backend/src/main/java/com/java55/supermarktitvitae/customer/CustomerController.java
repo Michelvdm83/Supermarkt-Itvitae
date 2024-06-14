@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,5 +45,11 @@ public class CustomerController {
                 jwtService.generateTokenForCustomer(authDTO.email()),
                 customerRepository.getReferenceById(authDTO.email()).getName()
         ));
+    }
+
+    @GetMapping("page-info")
+    public ResponseEntity<CustomerPageDTO> getInfo(Authentication authentication) {
+        Customer thisCustomer = (Customer) authentication.getPrincipal();
+        return ResponseEntity.ok(new CustomerPageDTO(thisCustomer.getName(), thisCustomer.getEmail()));
     }
 }
