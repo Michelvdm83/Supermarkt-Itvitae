@@ -23,26 +23,31 @@ export default function ProductPage() {
       : productToCheck.price;
   }
   const addProductToCart = () => {
-    axios
-      .post(
-        "http://localhost:8080/api/v1/shoppingcarts",
-        {
-          productName: product.name,
-          quantity: quantity,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: "Bearer " + window.sessionStorage.getItem("JWT"),
+    if (quantity <= 0) {
+      alert("Het produkt aantal mag niet 0 of lager zijn.");
+    } else {
+      console.log("succes");
+      axios
+        .post(
+          "http://localhost:8080/api/v1/shoppingcarts",
+          {
+            productName: product.name,
+            quantity: quantity,
           },
-        }
-      )
-      .then(() => {
-        setQuantity(1);
-      })
-      .catch((error) => {
-        console.log(error);
-      });
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer " + window.sessionStorage.getItem("JWT"),
+            },
+          }
+        )
+        .then(() => {
+          setQuantity(1);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
   };
 
   const NLEuro = new Intl.NumberFormat("nl-NL", {

@@ -46,6 +46,7 @@ public class ShoppingCartController {
         Customer customer = (Customer) authentication.getPrincipal();
         if (shoppingCartAddProductDto.productName() == null) return ResponseEntity.notFound().build();
         if (shoppingCartAddProductDto.quantity() == null) return ResponseEntity.notFound().build();
+        if (shoppingCartAddProductDto.quantity() <= 0) ResponseEntity.badRequest().build();
 
         ShoppingCart shoppingCart = null;
 
