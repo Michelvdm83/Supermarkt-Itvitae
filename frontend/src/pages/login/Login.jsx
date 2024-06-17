@@ -9,7 +9,6 @@ export default function Login({ role }) {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loggedIn, setLoggedIn] = useState(false);
 
   const USERNAME_STORAGE_LOCATION = "USERNAME";
   const TOKEN_STORAGE_LOCATION = "JWT";
@@ -40,12 +39,10 @@ export default function Login({ role }) {
         sessionStorage.setItem(TOKEN_STORAGE_LOCATION, response.data.token);
         sessionStorage.setItem(USERNAME_STORAGE_LOCATION, response.data.name);
         sessionStorage.setItem(ROLE_STORAGE_LOCATION, response.data.role);
-        setLoggedIn(true);
         navigate("/account");
       })
       .catch((error) => {
         alert(error.response.data.detail);
-        setLoggedIn(false);
       });
   }
 

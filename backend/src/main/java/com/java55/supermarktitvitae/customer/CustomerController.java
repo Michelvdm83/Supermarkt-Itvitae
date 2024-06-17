@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "${supermarktitvitae.cors}")
 public class CustomerController {
-
     private final CustomerRepository customerRepository;
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
