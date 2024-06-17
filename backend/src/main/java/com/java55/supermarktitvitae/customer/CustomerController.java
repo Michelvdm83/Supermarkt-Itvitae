@@ -26,7 +26,6 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @CrossOrigin(origins = "${supermarktitvitae.cors}")
 public class CustomerController {
-
     private final CustomerRepository customerRepository;
     private final ShoppingCartProductRepository shoppingCartProductRepository;
     private final JwtService jwtService;
