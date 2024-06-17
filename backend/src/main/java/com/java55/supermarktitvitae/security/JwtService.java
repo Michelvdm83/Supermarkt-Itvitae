@@ -2,6 +2,8 @@ package com.java55.supermarktitvitae.security;
 
 import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.customer.CustomerRepository;
+import com.java55.supermarktitvitae.manager.Manager;
+import com.java55.supermarktitvitae.manager.ManagerRepository;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import lombok.RequiredArgsConstructor;
@@ -20,9 +22,31 @@ public class JwtService {
     private final SecretKey secretKey;
 
     private final CustomerRepository customerRepository;
+    private final ManagerRepository managerRepository;
 
     @Value("${supermarktitvitae.jwt-expiration-ms}")
     private int JWT_EXPIRATION_MS;
+
+    public String generateTokenForManager(String email) throws UsernameNotFoundException {
+        Manager manager = managerRepository.getReferenceById(email);
+        if (manager.getEmail() == null) {
+            throw new UsernameNotFoundException("No Customer with email: " + email + " found.");
+        }
+
+        return buildManagerToken(manager);
+    }
+
+    private String buildManagerToken(Manager manager) {
+        long currentTimeMillis = System.currentTimeMillis();
+
+        return Jwts.builder()
+                .claims(Map.of(ROLES_CLAIM_NAME, manager.getAuthorities()))
+                .subject(manager.getUsername())
+                .issuedAt(new Date(currentTimeMillis))
+                .expiration(new Date(currentTimeMillis + JWT_EXPIRATION_MS))
+                .signWith(secretKey)
+                .compact();
+    }
 
     public String generateTokenForCustomer(String email) throws UsernameNotFoundException {
         Customer customer = customerRepository.getReferenceById(email);
@@ -79,9 +103,14 @@ public class JwtService {
 
         List<String> parsedRoles = new LinkedList<>();
 
+        rawRoles.forEach(System.out::println);
         for (Object o : rawRoles) {
-            if (o instanceof String parsedRole) {
-                parsedRoles.add(parsedRole);
+            if (o instanceof LinkedHashMap<?, ?> map) {
+                map.values().forEach(t -> {
+                    if (t instanceof String) {
+                        parsedRoles.add((String) t);
+                    }
+                });
             }
         }
 

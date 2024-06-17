@@ -17,12 +17,13 @@ export default function App() {
     <div className="flex items-center justify-center flex-col">
       <NavigationBar setSearchResults={setSearchResults} />
       <Routes>
+        <Route path="/login" element={<Login role="customer" />} />
+        <Route path="/login-manager" element={<Login role="manager" />} />
         <Route path="/sales" element={<Sales />} />
         <Route path="products/:productName" element={<ProductPage />} />
         <Route path="/login" element={<Login role="customer" />} />
         {/* apostrophes cant be ignored in the backend
         for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
-        <Route path="/login" element={<Login role="customer" />} />
         <Route
           path="/zoeken"
           element={<ProductSearch searchResults={searchResults} />}
