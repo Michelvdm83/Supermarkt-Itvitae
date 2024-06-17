@@ -23,7 +23,7 @@ export default function Home() {
 
   return (
     <div className="w-1/3 flex flex-col justify-center">
-      <Banner bannerText="In de aanbieding" />
+      <Banner bannerText="Beste deals" />
       <ul className="mt-12 flex flex-col gap-4">
         {topSales.map((product) => (
           <ProductBox key={product.name} product={product} />
