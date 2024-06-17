@@ -7,7 +7,5 @@ import java.util.Optional;
 import java.util.UUID;
 
 public interface ShoppingCartRepository extends JpaRepository<ShoppingCart, UUID> {
-    Optional<ShoppingCart> findByCustomer(Customer customer);
-
     Optional<ShoppingCart> findByCustomerAndIsPayed(Customer customer, boolean isPayed);
 }

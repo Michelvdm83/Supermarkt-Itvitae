@@ -1,7 +1,6 @@
 package com.java55.supermarktitvitae.shoppingcart;
 
 import com.java55.supermarktitvitae.customer.Customer;
-import com.java55.supermarktitvitae.customer.CustomerRepository;
 import com.java55.supermarktitvitae.product.Product;
 import com.java55.supermarktitvitae.product.ProductRepository;
 import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProduct;
@@ -20,7 +19,6 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class ShoppingCartController {
     private final ShoppingCartRepository shoppingCartRepository;
-    private final CustomerRepository customerRepository;
     private final ProductRepository productRepository;
     private final ShoppingCartProductRepository shoppingCartProductRepository;
 
@@ -48,7 +46,7 @@ public class ShoppingCartController {
         if (shoppingCartAddProductDto.quantity() == null) return ResponseEntity.notFound().build();
         if (shoppingCartAddProductDto.quantity() <= 0) ResponseEntity.badRequest().build();
 
-        ShoppingCart shoppingCart = null;
+        ShoppingCart shoppingCart;
 
         var possibleShoppingCarts = shoppingCartRepository.findByCustomerAndIsPayed(customer, false);
         if (possibleShoppingCarts.isEmpty()) {
