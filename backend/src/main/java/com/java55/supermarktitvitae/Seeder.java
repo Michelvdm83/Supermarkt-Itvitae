@@ -108,9 +108,9 @@ public class Seeder implements CommandLineRunner {
         }
         if (managerRepository.count() == 0) {
             List<Manager> managers = List.of(
-                    new Manager("pieter.van.loon@gmail.com", "Pieter van Loon", "1234"),
-                    new Manager("johan.amerongen@hotmail.nl", "Johan Amerongen", "1234"),
-                    new Manager("margretheartcows@outlook.com", "Margret Naaktgeboren", "1234")
+                    new Manager("pieter.van.loon@gmail.com", "Pieter van Loon", passwordEncoder.encode("1234")),
+                    new Manager("johan.amerongen@hotmail.nl", "Johan Amerongen", passwordEncoder.encode("1234")),
+                    new Manager("margretheartcows@outlook.com", "Margret Naaktgeboren", passwordEncoder.encode("1234"))
             );
             managerRepository.saveAll(managers);
         }
