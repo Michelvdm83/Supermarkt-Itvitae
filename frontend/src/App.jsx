@@ -7,6 +7,7 @@ import "./App.css";
 import Login from "./pages/login/Login";
 import { useState } from "react";
 import ProductSearch from "./pages/productsearch/ProductSearch";
+import CategoryPage from "./pages/Category/CategoryPage";
 
 export default function App() {
   const navigate = useNavigate();
@@ -18,6 +19,7 @@ export default function App() {
       <NavigationBar setSearchResults={setSearchResults} />
       <Routes>
         <Route path="/sales" element={<Sales />} />
+        <Route path="/products" element={<CategoryPage />} />
         <Route path="products/:productName" element={<ProductPage />} />
         {/* apostrophes cant be ignored in the backend
         for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
