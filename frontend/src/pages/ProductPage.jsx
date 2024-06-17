@@ -57,10 +57,6 @@ export default function ProductPage() {
     currency: "EUR",
   });
 
-  const log = (quantity) => {
-    console.log(quantity);
-  };
-
   let buttonCSS =
     "text-white rounded-2xl font-extrabold h-10  mr-2 p-2 flex justify-center items-center ";
   buttonCSS += product.salesPrice ? "bg-nn-pink" : "bg-nn-green";
@@ -74,6 +70,7 @@ export default function ProductPage() {
       {role === "customer" && (
         <>
           <input
+            type="number"
             value={quantity}
             onChange={(e) => setQuantity(e.target.value)}
           ></input>
