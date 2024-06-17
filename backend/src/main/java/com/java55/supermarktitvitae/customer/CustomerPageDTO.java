@@ -1,8 +1,8 @@
 package com.java55.supermarktitvitae.customer;
 
-import com.java55.supermarktitvitae.product.Product;
+import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProductMostBoughtDTO;
 
 import java.util.List;
 
-public record CustomerPageDTO(String name, String email, List<Product> mostBoughtProducts) {
+public record CustomerPageDTO(CustomerDTO customerInfo, List<ShoppingCartProductMostBoughtDTO> mostBoughtProducts) {
 }
