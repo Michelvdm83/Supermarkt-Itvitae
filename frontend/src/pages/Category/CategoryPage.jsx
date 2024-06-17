@@ -17,7 +17,9 @@ export default function CategoryPage() {
     <>
       <div className="flex flex-row mt-16 flex-wrap">
         {categories &&
-          categories.map((category) => <CategoryBox name={category} />)}
+          categories.map((category) => (
+            <CategoryBox name={category} key={category} />
+          ))}
       </div>
     </>
   );
