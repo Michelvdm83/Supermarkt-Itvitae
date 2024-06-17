@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 
 export default function Account() {
   const [pageData, setPageData] = useState({});
+  const [mostBought, setMostBought] = useState([]);
 
   useEffect(() => {
     if (sessionStorage.getItem("JWT") === null) {
@@ -16,6 +17,8 @@ export default function Account() {
         },
       })
       .then((response) => {
+        console.log(response.data);
+        setMostBought(response.data.mostBoughtProducts);
         setPageData(response.data);
       });
   }, []);
@@ -23,6 +26,10 @@ export default function Account() {
     <div>
       {pageData && <div>{pageData.name}</div>}
       {pageData && <div>{pageData.email}</div>}
+      {pageData &&
+        mostBought.map((product) => (
+          <div key={product.name}>{product.name}</div>
+        ))}
     </div>
   );
 }
