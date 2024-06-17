@@ -1,5 +1,6 @@
 package com.java55.supermarktitvitae.shoppingcartproduct;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.java55.supermarktitvitae.product.Product;
 import com.java55.supermarktitvitae.shoppingcart.ShoppingCart;
 import jakarta.persistence.Entity;
@@ -25,6 +26,7 @@ public class ShoppingCartProduct {
     private ShoppingCart shoppingCart;
 
     @ManyToOne
+    @JsonManagedReference
     private Product product;
 
     @Setter
