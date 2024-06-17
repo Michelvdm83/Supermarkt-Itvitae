@@ -38,7 +38,7 @@ public class CustomerController {
             return ResponseEntity.badRequest()
                     .body(ProblemDetail.forStatusAndDetail(
                             HttpStatus.BAD_REQUEST,
-                            "email and password are required"
+                            "email en wachtwoord zijn nodig"
                     ));
         }
 
@@ -48,13 +48,16 @@ public class CustomerController {
                     .badRequest()
                     .body(ProblemDetail.forStatusAndDetail(
                             HttpStatus.BAD_REQUEST,
-                            "email or password incorrect"
+                            "email of wachtwoord incorrect"
                     ));
         }
 
+        Customer customer = customerRepository.getReferenceById(authDTO.email());
+
         return ResponseEntity.ok(new JwtTokenDTO(
                 jwtService.generateTokenForCustomer(authDTO.email()),
-                customerRepository.getReferenceById(authDTO.email()).getName()
+                customer.getName(),
+                customer.getRole()
         ));
     }
 

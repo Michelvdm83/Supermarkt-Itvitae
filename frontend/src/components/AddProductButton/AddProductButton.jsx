@@ -1,7 +1,12 @@
-export default function AddProductButton() {
-  return (
-    <div className="bg-nn-orange mt-20 flex rounded-2xl h-10 mr-2 w-12 justify-center items-center">
-      <button>+</button>
-    </div>
-  );
+export default function AddProductButton({ product }) {
+  let buttonCSS =
+    "text-white rounded-2xl font-extrabold h-10 w-12 mr-2 mt-16 flex justify-center items-center ";
+
+  if (product.salesPrice != null) {
+    buttonCSS += "bg-nn-pink";
+  } else {
+    buttonCSS += "bg-nn-green";
+  }
+
+  return <button className={buttonCSS}>+</button>;
 }
