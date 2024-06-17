@@ -33,4 +33,10 @@ public class ProductController {
         if (product.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(product.get());
     }
+
+    @GetMapping("/bestsales")
+    public List<Product> getFiveBestSales() {
+
+    }
+
 }

@@ -8,24 +8,18 @@ export default function ProductBox({ product }) {
       return (
         <>
           <p className="text-nn-pink font-bold text-xl">
-            {NLEuro.format(productPrice(product))}
+            {NLEuro.format(product.salesPrice)}
           </p>
-          <p className="line-through">{NLEuro.format(productPrice(product))}</p>
+          <p className="line-through">{NLEuro.format(product.price)}</p>
         </>
       );
     } else {
       return (
         <>
-          <p className="font-medium">{NLEuro.format(productPrice(product))}</p>
+          <p className="font-medium">{NLEuro.format(product.price)}</p>
         </>
       );
     }
-  }
-
-  function productPrice(productToCheck) {
-    return productToCheck.salesPrice
-      ? productToCheck.salesPrice
-      : productToCheck.price;
   }
 
   const NLEuro = new Intl.NumberFormat("nl-NL", {
