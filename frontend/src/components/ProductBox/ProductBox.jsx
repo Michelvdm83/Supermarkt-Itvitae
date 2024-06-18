@@ -40,7 +40,7 @@ export default function ProductBox({ product }) {
           <h3 className="text-lg font-medium m-0  mr-0">{product.name}</h3>
           <p>{product.description}</p>
         </div>
-        <div className="mb-2 gap-2 mt-16 w-12 flex justify-center items-center">
+        <div className="mb-2 gap-2 mt-16 w-12 flex justify-end items-center">
           {getPrice()}
         </div>
       </div>
