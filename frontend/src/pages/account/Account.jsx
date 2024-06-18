@@ -51,6 +51,14 @@ export default function Account() {
             {product.quantity}x {product.productname}
           </div>
         ))}
+      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
+        <div className=" my-4">
+          <p className=" font-bold">Hallo Manager</p>
+          <button className="bg-gray-400 rounded my-2 p-1">
+            Voeg een nieuw product toe aan het assortiment
+          </button>
+        </div>
+      )}
       <button className=" bg-gray-400 rounded m-1 p-1" onClick={logout}>
         logout
       </button>
