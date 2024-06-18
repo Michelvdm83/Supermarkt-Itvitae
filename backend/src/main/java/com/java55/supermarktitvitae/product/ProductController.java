@@ -45,10 +45,9 @@ public class ProductController {
         }
 
         Product productToUpdate = possibleProduct.get();
-        if (productPatchDTO.newName() != null && !productPatchDTO.newName().isBlank()) {
-            productRepository.delete(productToUpdate);
-            productToUpdate.setName(productPatchDTO.newName());
-        }
+//        if (productPatchDTO.newName() != null && !productPatchDTO.newName().isBlank()) {
+//            productToUpdate.setName(productPatchDTO.newName());
+//        }
         if (productPatchDTO.description() != null && !productPatchDTO.description().isBlank()) {
             productToUpdate.setDescription(productPatchDTO.description());
         }
