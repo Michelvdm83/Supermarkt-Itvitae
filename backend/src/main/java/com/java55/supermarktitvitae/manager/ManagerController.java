@@ -50,9 +50,9 @@ public class ManagerController {
     }
 
     @GetMapping("page-info")
-    public ResponseEntity<ManagerDTO> getInfo(Authentication authentication) {
+    public ManagerDTO getInfo(Authentication authentication) {
         Manager thisManager = (Manager) authentication.getPrincipal();
 
-        return ResponseEntity.ok(ManagerDTO.from(thisManager));
+        return ManagerDTO.from(thisManager);
     }
 }

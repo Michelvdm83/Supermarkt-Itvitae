@@ -44,7 +44,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (requestHasValidAuthHeader(request)) {
             String[] roles = getRoleFromAuthorization(request.getHeader(AUTHORIZATION_HEADER_NAME));
             var currentRole = roles[0];
-            System.out.println(currentRole);
             var possibleUser = currentRole.equalsIgnoreCase("ROLE_customer") ?
                     getCustomerFromAuthorizationHeader(request.getHeader(AUTHORIZATION_HEADER_NAME)) :
                     getManagerFromAuthorizationHeader(request.getHeader(AUTHORIZATION_HEADER_NAME));
