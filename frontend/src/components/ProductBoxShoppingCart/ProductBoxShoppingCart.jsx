@@ -8,9 +8,7 @@ export default function ProductBoxShoppingCart({ product }) {
     currency: "EUR",
   });
 
-  const deleteProductFromCart = () => {
-    console.log("s");
-  };
+  const deleteProductFromCart = () => {};
 
   return (
     <>

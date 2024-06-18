@@ -7,11 +7,15 @@ import { useState, useEffect } from "react";
 export default function ShoppingCart() {
   const navigate = useNavigate();
   const jwt = sessionStorage.getItem("JWT");
+  const role = sessionStorage.getItem("ROLE");
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (jwt == null) {
       navigate("/login");
+    }
+    if (role !== "customer") {
+      navigate("/");
     }
     getShoppingCartContent();
   }, []);
