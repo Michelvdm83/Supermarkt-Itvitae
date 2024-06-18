@@ -20,4 +20,15 @@ public class Product {
     private String description;
     private Category category;
     private Double salesPrice;
+
+    private boolean isActive;
+
+    public Product(String name, double price, String description, Category category, Double salesPrice) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.category = category;
+        this.salesPrice = salesPrice;
+        isActive = true;
+    }
 }

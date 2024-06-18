@@ -33,4 +33,32 @@ public class ProductController {
         if (product.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(product.get());
     }
+
+    @PatchMapping("/update/{name}")
+    public ResponseEntity<?> updateProduct(@PathVariable String name, @RequestBody ProductPatchDTO productPatchDTO) {
+        if (name == null || name.isBlank()) {
+            return ResponseEntity.badRequest().body("name of product can't be empty");
+        }
+        var possibleProduct = productRepository.findByNameIgnoreCase(name);
+        if (possibleProduct.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Product productToUpdate = possibleProduct.get();
+        if (productPatchDTO.newName() != null && !productPatchDTO.newName().isBlank()) {
+            productRepository.delete(productToUpdate);
+            productToUpdate.setName(productPatchDTO.newName());
+        }
+        if (productPatchDTO.description() != null && !productPatchDTO.description().isBlank()) {
+            productToUpdate.setDescription(productPatchDTO.description());
+        }
+        if (productPatchDTO.price() != null) {
+            productToUpdate.setPrice(productPatchDTO.price());
+        }
+        if (productPatchDTO.salesPrice() != null) {
+            productToUpdate.setSalesPrice(productPatchDTO.salesPrice());
+        }
+
+        return ResponseEntity.ok(productRepository.save(productToUpdate));
+    }
 }
