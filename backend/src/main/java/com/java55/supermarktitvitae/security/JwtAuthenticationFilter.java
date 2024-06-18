@@ -2,6 +2,7 @@ package com.java55.supermarktitvitae.security;
 
 import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.customer.CustomerRepository;
+import com.java55.supermarktitvitae.manager.Manager;
 import com.java55.supermarktitvitae.manager.ManagerRepository;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -41,24 +42,30 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         if (requestHasValidAuthHeader(request)) {
-            getUserFromAuthorizationHeader(request.getHeader(AUTHORIZATION_HEADER_NAME))
-                    .ifPresent(
-                            principal -> {
-                                UsernamePasswordAuthenticationToken authToken =
-                                        new UsernamePasswordAuthenticationToken(
-                                                principal,
-                                                null,
-                                                principal.getAuthorities()
-                                        );
+            String[] roles = getRoleFromAuthorization(request.getHeader(AUTHORIZATION_HEADER_NAME));
+            var currentRole = roles[0];
+            System.out.println(currentRole);
+            var possibleUser = currentRole.equalsIgnoreCase("ROLE_customer") ?
+                    getCustomerFromAuthorizationHeader(request.getHeader(AUTHORIZATION_HEADER_NAME)) :
+                    getManagerFromAuthorizationHeader(request.getHeader(AUTHORIZATION_HEADER_NAME));
 
-                                authToken.setDetails(
-                                        new WebAuthenticationDetailsSource()
-                                                .buildDetails(request)
+            possibleUser.ifPresent(
+                    principal -> {
+                        UsernamePasswordAuthenticationToken authToken =
+                                new UsernamePasswordAuthenticationToken(
+                                        principal,
+                                        null,
+                                        principal.getAuthorities()
                                 );
 
-                                SecurityContextHolder.getContext().setAuthentication(authToken);
-                            }
-                    );
+                        authToken.setDetails(
+                                new WebAuthenticationDetailsSource()
+                                        .buildDetails(request)
+                        );
+
+                        SecurityContextHolder.getContext().setAuthentication(authToken);
+                    }
+            );
         }
 
         filterChain.doFilter(request, response);
@@ -69,8 +76,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return authHeader != null && authHeader.startsWith(AUTHORIZATION_HEADER_JWT_PREFIX);
     }
 
-    // try to make logic for Customer/Manager options
-    private Optional<Customer> getUserFromAuthorizationHeader(String authorization) {
+    private Optional<Customer> getCustomerFromAuthorizationHeader(String authorization) {
         if (authorization == null || !authorization.startsWith(AUTHORIZATION_HEADER_JWT_PREFIX)) {
             return Optional.empty();
         }
@@ -83,5 +89,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 .readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length()))
                 .filter(token -> !token.isExpired())
                 .map(token -> customerRepository.findByEmail(token.username()).orElseThrow(RuntimeException::new));
+    }
+
+    private Optional<Manager> getManagerFromAuthorizationHeader(String authorization) {
+        if (authorization == null || !authorization.startsWith(AUTHORIZATION_HEADER_JWT_PREFIX)) {
+            return Optional.empty();
+        }
+
+        var possibleToken = jwtService.readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length())).filter(token -> !token.isExpired());
+        if (possibleToken.isEmpty()) {
+            throw new RuntimeException("error on token");
+        }
+        return jwtService
+                .readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length()))
+                .filter(token -> !token.isExpired())
+                .map(token -> managerRepository.findById(token.username()).orElseThrow(RuntimeException::new));
+    }
+
+    private String[] getRoleFromAuthorization(String authorization) {
+        if (authorization == null || !authorization.startsWith(AUTHORIZATION_HEADER_JWT_PREFIX)) {
+            return null;
+        }
+
+        var possibleToken = jwtService.readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length())).filter(token -> !token.isExpired());
+        if (possibleToken.isEmpty()) {
+            throw new RuntimeException("error on token");
+        }
+        var token = possibleToken.get();
+        return token.roles();
     }
 }

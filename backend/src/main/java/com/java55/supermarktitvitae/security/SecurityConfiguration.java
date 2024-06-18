@@ -37,6 +37,7 @@ public class SecurityConfiguration {
                 .authorizeHttpRequests(c -> c
                         .requestMatchers("api/v1/shoppingcarts").hasRole("customer")
                         .requestMatchers("api/v1/customers/page-info").hasRole("customer")
+                        .requestMatchers("api/v1/managers/page-info").hasRole("manager")
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)

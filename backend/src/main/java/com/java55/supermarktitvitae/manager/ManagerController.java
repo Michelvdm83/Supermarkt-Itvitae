@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +47,12 @@ public class ManagerController {
                 manager.getName(),
                 manager.getRole()
         ));
+    }
+
+    @GetMapping("page-info")
+    public ResponseEntity<ManagerDTO> getInfo(Authentication authentication) {
+        Manager thisManager = (Manager) authentication.getPrincipal();
+
+        return ResponseEntity.ok(ManagerDTO.from(thisManager));
     }
 }
