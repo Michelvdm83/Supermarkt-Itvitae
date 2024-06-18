@@ -8,6 +8,7 @@ import Login from "./pages/login/Login";
 import { useState } from "react";
 import ProductSearch from "./pages/productsearch/ProductSearch";
 import Account from "./pages/account/Account";
+import CategoryPage from "./pages/Category/CategoryPage";
 import ShoppingCart from "./pages/shoppingcart/ShoppingCart.jsx";
 
 export default function App() {
@@ -22,6 +23,7 @@ export default function App() {
         <Route path="/login" element={<Login role="customer" />} />
         <Route path="/login-manager" element={<Login role="manager" />} />
         <Route path="/sales" element={<Sales />} />
+        <Route path="/products" element={<CategoryPage />} />
         <Route path="products/:productName" element={<ProductPage />} />
         {/* apostrophes cant be ignored in the backend
         for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
