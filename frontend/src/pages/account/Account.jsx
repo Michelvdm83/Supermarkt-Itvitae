@@ -16,16 +16,21 @@ export default function Account() {
     if (sessionStorage.getItem("JWT") === null) {
       return;
     }
+    const currentRole = sessionStorage.getItem(ROLE_STORAGE_LOCATION);
     axios
-      .get("http://localhost:8080/api/v1/customers/page-info", {
+      .get("http://localhost:8080/api/v1/" + currentRole + "s/page-info", {
         headers: {
           "Content-Type": "application/json",
           Authorization: "Bearer " + sessionStorage.getItem("JWT"),
         },
       })
       .then((response) => {
-        setMostBought(response.data.mostBoughtProducts);
-        setPageData(response.data.customerInfo);
+        if (currentRole === "customer") {
+          setMostBought(response.data.mostBoughtProducts);
+          setPageData(response.data.customerInfo);
+        } else if (currentRole === "manager") {
+          setPageData(response.data);
+        }
       });
   }, []);
 
@@ -58,6 +63,7 @@ export default function Account() {
       <Banner bannerText="Meest gekocht" />
       <div className="flex items-stretch justify-between">
         {mostBought &&
+          sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" &&
           mostBought.map((product) => (
             <div
               key={product.productname}
