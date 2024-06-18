@@ -26,7 +26,6 @@ export default function ShoppingCart() {
       })
       .then((response) => {
         setProducts(response.data.shoppingCartProducts);
-        console.log(response.data.shoppingCartProducts);
       })
       .catch((error) => {
         console.log(error);

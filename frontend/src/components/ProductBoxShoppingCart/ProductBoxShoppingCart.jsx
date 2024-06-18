@@ -14,7 +14,7 @@ export default function ProductBoxShoppingCart({ product }) {
 
   return (
     <>
-      <div className="min-w-fit border-2 rounded-2xl shadow-xl h-32 gap-8 flex">
+      <div className="min-w-fit border-2 rounded-2xl shadow-xl h-32 flex justify-around">
         <button
           onClick={() => navigate("/products/" + product.productName)}
           className="my-4 ml-8 w-1/3 flex flex-col justify-center items-start"

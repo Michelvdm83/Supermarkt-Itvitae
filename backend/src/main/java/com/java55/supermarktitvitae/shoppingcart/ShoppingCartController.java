@@ -56,7 +56,7 @@ public class ShoppingCartController {
         } else {
             shoppingCart = possibleShoppingCarts.get();
         }
-
+    
         var possibleProduct = productRepository.findByName(shoppingCartAddProductDto.productName());
         if (possibleProduct.isEmpty()) return ResponseEntity.notFound().build();
         Product product = possibleProduct.get();
