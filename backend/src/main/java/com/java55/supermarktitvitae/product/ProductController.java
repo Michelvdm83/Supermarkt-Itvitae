@@ -37,7 +37,7 @@ public class ProductController {
     public List<Product> getFiveBestSales() {
 
         List<Product> sales = productRepository.findBySalesPriceNotNullOrderByName();
-        
+
         for (int inner = 0; inner < sales.size(); inner++) {
             Product currentProduct = sales.get(inner);
             double priceDifferenceCurrentProduct = currentProduct.getPrice() - currentProduct.getSalesPrice();

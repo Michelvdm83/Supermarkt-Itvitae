@@ -1,7 +1,7 @@
 import Banner from "../../components/Banner/Banner.jsx";
-import ProductBox from "../../components/ProductBox/ProductBox.jsx";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import SmallProductBox from "../../components/ProductBox/SmallProductbox.jsx";
 
 export default function Home() {
   const [topSales, setTopSales] = useState([]);
@@ -22,11 +22,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="w-1/3 flex flex-col justify-center">
+    <div className="mt-40">
       <Banner bannerText="Beste deals" />
-      <ul className="mt-12 flex flex-col gap-4">
+      <ul>
         {topSales.map((product) => (
-          <ProductBox key={product.name} product={product} />
+          <SmallProductBox key={product.name} product={product} />
         ))}
       </ul>
     </div>
