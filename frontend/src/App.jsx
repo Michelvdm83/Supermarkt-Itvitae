@@ -31,6 +31,7 @@ export default function App() {
           element={<ProductSearch searchResults={searchResults} />}
         />
         <Route path="/account" element={<Account />} />
+        <Route path="/add-product" />
       </Routes>
     </div>
   );
