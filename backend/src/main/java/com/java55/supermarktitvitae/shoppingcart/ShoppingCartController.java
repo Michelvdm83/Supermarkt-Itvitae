@@ -11,8 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import java.util.UUID;
-
 @RestController
 @RequestMapping("api/v1/shoppingcarts")
 @CrossOrigin("http://localhost:5173")
@@ -22,15 +20,18 @@ public class ShoppingCartController {
     private final ProductRepository productRepository;
     private final ShoppingCartProductRepository shoppingCartProductRepository;
 
-    @GetMapping("{id}")
-    public ResponseEntity<ShoppingCartDto> GetById(@PathVariable UUID id) {
-        if (id == null) return ResponseEntity.badRequest().build();
+    @GetMapping
+    public ResponseEntity<ShoppingCartDto> GetByUserName(Authentication authentication) {
+        Customer customer = (Customer) authentication.getPrincipal();
 
-        var possibleShoppingCart = shoppingCartRepository.findById(id);
-        if (possibleShoppingCart.isEmpty()) {
+        ShoppingCart shoppingCart;
+
+        var possibleShoppingCarts = shoppingCartRepository.findByCustomerAndIsPayed(customer, false);
+        if (possibleShoppingCarts.isEmpty()) {
             return ResponseEntity.notFound().build();
+        } else {
+            shoppingCart = possibleShoppingCarts.get();
         }
-        ShoppingCart shoppingCart = possibleShoppingCart.get();
 
         return ResponseEntity.ok(ShoppingCartDto.from(shoppingCart));
     }
