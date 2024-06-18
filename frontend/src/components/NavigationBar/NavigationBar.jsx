@@ -1,5 +1,6 @@
 import HomeButton from "../HomeButton/HomeButton";
 import NavigationBarItem from "../NavigationBarItem/NavigationBarItem";
+import NavigationBarShoppingCart from "../NavigationBarShoppingCart/NavigationBarShoppingCart";
 import SearchBar from "../SearchBar/SearchBar";
 
 export default function NavigationBar({ setSearchResults }) {
@@ -11,11 +12,16 @@ export default function NavigationBar({ setSearchResults }) {
       <SearchBar setSearchResults={setSearchResults} />
       {/*hier logica inloggen/registreren of persoonlijke pagina + 1 of 2 knoppen*/}
       {sessionStorage.getItem("JWT") ? (
-        <NavigationBarItem title="Account" page="account" />
+        <>
+          <NavigationBarItem title="Account" page="account" />
+          <NavigationBarItem title="Winkelmandje" page="shoppingcart" />
+        </>
       ) : (
-        <NavigationBarItem title="Inloggen/Registreren" page="login" />
+        <>
+          <NavigationBarItem title="Inloggen/Registreren" page="login" />
+          <NavigationBarItem title="Winkelmandje" page="login" />
+        </>
       )}
-      <NavigationBarItem title="Winkelmandje" page="shoppingcart" />
     </div>
   );
 }

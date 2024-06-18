@@ -17,13 +17,12 @@ public class ProductController {
 
     @GetMapping("/searchbar")
     public List<Product> searchProductByName(@RequestParam String contains) {
-
         return productRepository.findByNameContainsIgnoreCaseOrderByName(contains);
     }
 
     @GetMapping("/sales")
     public List<Product> getSales() {
-        return productRepository.findBySalesPriceNotNull();
+        return productRepository.findBySalesPriceNotNullOrderByName();
     }
 
     @GetMapping("/{name}")
@@ -60,4 +59,34 @@ public class ProductController {
 
         return ResponseEntity.ok(productRepository.save(productToUpdate));
     }
+
+    @GetMapping("/bestsales")
+    public List<Product> getFiveBestSales() {
+
+        List<Product> sales = productRepository.findBySalesPriceNotNullOrderByName();
+
+        for (int inner = 0; inner < sales.size(); inner++) {
+            Product currentProduct = sales.get(inner);
+            double priceDifferenceCurrentProduct = currentProduct.getPrice() - currentProduct.getSalesPrice();
+
+            for (int outer = inner + 1; outer < sales.size(); outer++) {
+                Product outerProduct = sales.get(outer);
+                double priceDifferenceOuterProduct = outerProduct.getPrice() - outerProduct.getSalesPrice();
+
+                if (priceDifferenceCurrentProduct < priceDifferenceOuterProduct) {
+                    Product temp = sales.get(inner);
+                    sales.set(inner, sales.get(outer));
+                    sales.set(outer, temp);
+
+                    currentProduct = outerProduct;
+                    priceDifferenceCurrentProduct = priceDifferenceOuterProduct;
+
+                }
+            }
+        }
+
+        return sales.subList(0, 5);
+
+    }
+
 }
