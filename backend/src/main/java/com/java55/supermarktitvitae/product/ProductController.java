@@ -42,20 +42,23 @@ public class ProductController {
             Product currentProduct = sales.get(inner);
             double priceDifferenceCurrentProduct = currentProduct.getPrice() - currentProduct.getSalesPrice();
 
-            for (int outer = 0; outer < sales.size(); outer++) {
-                if (outer == inner) continue;
-
+            for (int outer = inner + 1; outer < sales.size(); outer++) {
                 Product outerProduct = sales.get(outer);
                 double priceDifferenceOuterProduct = outerProduct.getPrice() - outerProduct.getSalesPrice();
 
-                if (priceDifferenceCurrentProduct > priceDifferenceOuterProduct) {
-                    sales.remove(currentProduct);
-                    sales.add(outer, currentProduct);
+                if (priceDifferenceCurrentProduct < priceDifferenceOuterProduct) {
+                    Product temp = sales.get(inner);
+                    sales.set(inner, sales.get(outer));
+                    sales.set(outer, temp);
+
+                    currentProduct = outerProduct;
+                    priceDifferenceCurrentProduct = priceDifferenceOuterProduct;
+
                 }
             }
         }
 
-        return sales.subList(sales.size() - 5, sales.size());
+        return sales.subList(0, 5);
 
     }
 

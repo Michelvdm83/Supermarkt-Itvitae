@@ -24,7 +24,7 @@ export default function Home() {
   return (
     <div className="mt-40">
       <Banner bannerText="Beste deals" />
-      <ul>
+      <ul className="">
         {topSales.map((product) => (
           <SmallProductBox key={product.name} product={product} />
         ))}
