@@ -9,6 +9,7 @@ import { useState } from "react";
 import ProductSearch from "./pages/productsearch/ProductSearch";
 import Account from "./pages/account/Account";
 import CategoryPage from "./pages/Category/CategoryPage";
+import AddProduct from "./pages/addProduct/AddProduct";
 
 export default function App() {
   const navigate = useNavigate();
@@ -31,7 +32,7 @@ export default function App() {
           element={<ProductSearch searchResults={searchResults} />}
         />
         <Route path="/account" element={<Account />} />
-        <Route path="/add-product" />
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </div>
   );
