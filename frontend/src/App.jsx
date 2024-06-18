@@ -10,6 +10,7 @@ import ProductSearch from "./pages/productsearch/ProductSearch";
 import Account from "./pages/account/Account";
 import CategoryPage from "./pages/Category/CategoryPage";
 import Home from "./pages/home/Home";
+import ShoppingCart from "./pages/shoppingcart/ShoppingCart.jsx";
 
 export default function App() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function App() {
           element={<ProductSearch searchResults={searchResults} />}
         />
         <Route path="/account" element={<Account />} />
+        <Route path="/shoppingcart" element={<ShoppingCart />} />
       </Routes>
     </div>
   );
