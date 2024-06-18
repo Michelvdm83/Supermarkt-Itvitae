@@ -1,10 +1,10 @@
 package com.java55.supermarktitvitae;
 
+import com.java55.supermarktitvitae.category.Category;
 import com.java55.supermarktitvitae.customer.Customer;
 import com.java55.supermarktitvitae.customer.CustomerRepository;
 import com.java55.supermarktitvitae.manager.Manager;
 import com.java55.supermarktitvitae.manager.ManagerRepository;
-import com.java55.supermarktitvitae.product.Category;
 import com.java55.supermarktitvitae.product.Product;
 import com.java55.supermarktitvitae.product.ProductRepository;
 import lombok.RequiredArgsConstructor;
