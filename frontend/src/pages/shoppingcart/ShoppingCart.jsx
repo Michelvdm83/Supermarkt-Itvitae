@@ -9,6 +9,7 @@ export default function ShoppingCart() {
   const jwt = sessionStorage.getItem("JWT");
   const role = sessionStorage.getItem("ROLE");
   const [products, setProducts] = useState([]);
+  const [cartId, setCartId] = useState("");
 
   useEffect(() => {
     if (jwt == null) {
@@ -29,6 +30,7 @@ export default function ShoppingCart() {
         },
       })
       .then((response) => {
+        setCartId(response.data.shoppingCartId);
         setProducts(response.data.shoppingCartProducts);
       })
       .catch((error) => {
@@ -42,7 +44,12 @@ export default function ShoppingCart() {
       <ul className="mt-12 flex flex-col gap-4">
         {products !== null &&
           products.map((product) => (
-            <ProductBoxShoppingCart key={product.uuid} product={product} />
+            <ProductBoxShoppingCart
+              key={product.uuid}
+              product={product}
+              setProducts={setProducts}
+              cartId={cartId}
+            />
           ))}
       </ul>
     </div>
