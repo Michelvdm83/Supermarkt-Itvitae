@@ -11,6 +11,7 @@ import Account from "./pages/account/Account";
 import CategoryPage from "./pages/Category/CategoryPage";
 import Home from "./pages/home/Home";
 import ShoppingCart from "./pages/shoppingcart/ShoppingCart.jsx";
+import ProductsByCategory from "./pages/ProductsByCategory/ProductsByCategory.jsx";
 
 export default function App() {
   const navigate = useNavigate();
@@ -33,6 +34,7 @@ export default function App() {
           path="/zoeken"
           element={<ProductSearch searchResults={searchResults} />}
         />
+        <Route path="category/:categoryName" element={<ProductsByCategory />} />
         <Route path="/account" element={<Account />} />
         <Route path="/shoppingcart" element={<ShoppingCart />} />
       </Routes>

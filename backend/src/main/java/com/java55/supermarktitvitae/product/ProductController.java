@@ -1,5 +1,6 @@
 package com.java55.supermarktitvitae.product;
 
+import com.java55.supermarktitvitae.category.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,6 +32,12 @@ public class ProductController {
         Optional<Product> product = productRepository.findByNameIgnoreCase(name);
         if (product.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(product.get());
+    }
+
+    @GetMapping("/category/{categoryName}")
+    public List<Product> getProductsByCategory(@PathVariable String categoryName) {
+        Category category = Category.valueOf(categoryName.toUpperCase());
+        return productRepository.findByCategory(category);
     }
 
     @GetMapping("/bestsales")
