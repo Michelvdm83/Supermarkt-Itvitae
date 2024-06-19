@@ -71,7 +71,7 @@ export default function ProductPage() {
   });
 
   let buttonCSS =
-    "text-white rounded-2xl font-extrabold h-10  mr-2 p-2 flex justify-center items-center ";
+    "text-white rounded-2xl font-extrabold h-10 mr-2 p-2 flex justify-center items-center ";
   buttonCSS += product.salesPrice ? "bg-nn-pink" : "bg-nn-green";
 
   return (

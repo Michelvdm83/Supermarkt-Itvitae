@@ -57,7 +57,7 @@ export default function Account() {
           className="mb-4 mx-4 bg-gray-400 rounded m-1 p-1"
           onClick={logout}
         >
-          logout
+          Uitloggen
         </button>
       </div>
       <Banner bannerText="Meest gekocht" />

@@ -26,7 +26,7 @@ export default function LoginForm({
         autoComplete="false"
       />
       <button
-        className="text-white bg-nn-green rounded-2xl font-extrabold h-10 w-20 mr-2 mt-6 flex justify-center items-center"
+        className="text-white bg-nn-green mb-4 rounded-2xl font-extrabold h-10 w-20 mr-2 mt-6 flex justify-center items-center"
         onClick={login}
       >
         log in
