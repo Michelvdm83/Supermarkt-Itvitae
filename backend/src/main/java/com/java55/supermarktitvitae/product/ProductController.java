@@ -34,9 +34,10 @@ public class ProductController {
     }
 
     @PatchMapping("/update/{name}")
-    public ResponseEntity<?> updateProduct(@PathVariable String name, @RequestBody ProductPatchDTO productPatchDTO) {
+    public ResponseEntity<Product> updateProduct(@PathVariable String name, @RequestParam Boolean updateSales, @RequestBody ProductPatchDTO productPatchDTO) {
+
         if (name == null || name.isBlank()) {
-            return ResponseEntity.badRequest().body("name of product can't be empty");
+            return ResponseEntity.badRequest().build();
         }
         var possibleProduct = productRepository.findByNameIgnoreCase(name);
         if (possibleProduct.isEmpty()) {
@@ -44,20 +45,36 @@ public class ProductController {
         }
 
         Product productToUpdate = possibleProduct.get();
-//        if (productPatchDTO.newName() != null && !productPatchDTO.newName().isBlank()) {
-//            productToUpdate.setName(productPatchDTO.newName());
-//        }
+
         if (productPatchDTO.description() != null && !productPatchDTO.description().isBlank()) {
-            productToUpdate.setDescription(productPatchDTO.description());
+            productToUpdate.setDescription(productPatchDTO.description().trim());
         }
-        if (productPatchDTO.price() != null) {
+        if (productPatchDTO.price() != null && productPatchDTO.price() > 0) {
             productToUpdate.setPrice(productPatchDTO.price());
         }
-        if (productPatchDTO.salesPrice() != null) {
-            productToUpdate.setSalesPrice(productPatchDTO.salesPrice());
+        if (updateSales) {
+            if (productPatchDTO.salesPrice() == null || productPatchDTO.salesPrice() > 0) {
+                productToUpdate.setSalesPrice(productPatchDTO.salesPrice());
+            }
         }
 
         return ResponseEntity.ok(productRepository.save(productToUpdate));
+    }
+
+    @DeleteMapping("/remove/{name}")
+    public ResponseEntity<?> removeProduct(@PathVariable String name) {
+        if (name == null || name.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var possibleProduct = productRepository.findByNameIgnoreCase(name);
+        if (possibleProduct.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var productToDelete = possibleProduct.get();
+        productToDelete.setActive(false);
+        productRepository.save(productToDelete);
+        return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/bestsales")

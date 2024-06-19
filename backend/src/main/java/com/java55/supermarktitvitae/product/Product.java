@@ -3,14 +3,14 @@ package com.java55.supermarktitvitae.product;
 import com.java55.supermarktitvitae.category.Category;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
+@SQLRestriction("is_active=true")
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
 @Setter
 public class Product {

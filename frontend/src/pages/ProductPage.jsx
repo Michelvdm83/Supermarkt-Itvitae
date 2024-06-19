@@ -3,6 +3,8 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import AddProductButton from "../components/AddProductButton/AddProductButton";
+import EditablePriceField from "../components/EditablePriceField/EditablePriceField";
+import EditableDescriptionField from "../components/EditableDescriptionField/EditableDescriptionField";
 
 export default function ProductPage() {
   const [product, setProduct] = useState({});
@@ -16,7 +18,9 @@ export default function ProductPage() {
   function getProduct() {
     fetch(`http://localhost:8080/api/v1/products/${productName}`)
       .then((response) => response.json())
-      .then((body) => setProduct(body))
+      .then((body) => {
+        setProduct(body);
+      })
       .catch((error) => console.log(error));
   }
 
@@ -52,6 +56,18 @@ export default function ProductPage() {
     }
   };
 
+  function deleteProduct() {
+    axios
+      .delete("http://localhost:8080/api/v1/products/remove/" + product.name, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("JWT"),
+        },
+      })
+      .then((response) => setProduct({}))
+      .catch((error) => alert("Product kon niet verwijderd worden"));
+  }
+
   const NLEuro = new Intl.NumberFormat("nl-NL", {
     style: "currency",
     currency: "EUR",
@@ -64,9 +80,29 @@ export default function ProductPage() {
   return (
     <>
       <p>{product.name}</p>
-      <p>{NLEuro.format(productPrice(product))}</p>
+      {role === "customer" && <p>{NLEuro.format(productPrice(product))}</p>}
+      {role === "manager" && product.price && (
+        <EditablePriceField
+          fieldName="price"
+          product={product}
+          setProduct={setProduct}
+        />
+      )}
+      {role === "manager" && product.price && (
+        <EditablePriceField
+          fieldName="salesPrice"
+          product={product}
+          setProduct={setProduct}
+        />
+      )}
       <p>{product.category}</p>
-      <p>{product.description}</p>
+      {role === "customer" && <p>{product.description}</p>}
+      {role === "manager" && product.description && (
+        <EditableDescriptionField product={product} setProduct={setProduct} />
+      )}
+      {role === "manager" && product.name && (
+        <button onClick={deleteProduct}>delete product</button>
+      )}
       {role === "customer" && (
         <>
           <input
