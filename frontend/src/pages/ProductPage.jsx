@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import AddProductButton from "../components/AddProductButton/AddProductButton";
 
 export default function ProductPage() {
   const [product, setProduct] = useState({});
