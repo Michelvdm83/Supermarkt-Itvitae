@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
+import EditablePriceField from "../components/EditablePriceField/EditablePriceField";
+import EditableDescriptionField from "../components/EditableDescriptionField/EditableDescriptionField";
 
 export default function ProductPage() {
   const [product, setProduct] = useState({});
@@ -15,7 +17,9 @@ export default function ProductPage() {
   function getProduct() {
     fetch(`http://localhost:8080/api/v1/products/${productName}`)
       .then((response) => response.json())
-      .then((body) => setProduct(body))
+      .then((body) => {
+        setProduct(body);
+      })
       .catch((error) => console.log(error));
   }
 
@@ -64,6 +68,18 @@ export default function ProductPage() {
     }
   };
 
+  function deleteProduct() {
+    axios
+      .delete("http://localhost:8080/api/v1/products/remove/" + product.name, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + sessionStorage.getItem("JWT"),
+        },
+      })
+      .then((response) => setProduct({}))
+      .catch((error) => alert("Product kon niet verwijderd worden"));
+  }
+
   const NLEuro = new Intl.NumberFormat("nl-NL", {
     style: "currency",
     currency: "EUR",
@@ -77,26 +93,52 @@ export default function ProductPage() {
     <div className="flex gap-8 border-2 rounded-2xl shadow-xl mt-20 w-1/3 h-80 ">
       <div className="flex flex-col size-40 gap-8 mt-10 ml-12">
         <p className="text-lg font-medium">{product.name}</p>
-        <p>{product.description}</p>
-      </div>
-      <div className="flex items-end mb-8 mx-8 ">
-        <p className="mr-10">{getPrice()}</p>
-        {role === "customer" && (
-          <>
-            <input
-              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
-              type="number"
-              value={quantity}
-              onChange={(e) => setQuantity(e.target.value)}
-            ></input>
-            <button className={buttonCSS} onClick={addProductToCart}>
-              Voeg toe
-            </button>
-          </>
+        {role !== "manager" && <p>{product.description}</p>}
+        {role === "manager" && product.description && (
+          <EditableDescriptionField
+            className=" bg-gray-100 rounded-2xl mr-4 size-10 "
+            product={product}
+            setProduct={setProduct}
+          />
         )}
-      </div>
+        <div className="flex flex-col items-end mb-8 mx-8 ">
+          {role !== "manager" && <div className="mr-10 ">{getPrice()}</div>}
+          {role === "manager" && product.price && (
+            <EditablePriceField
+              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
+              fieldName="price"
+              product={product}
+              setProduct={setProduct}
+            />
+          )}
+          {role === "customer" && (
+            <div className="flex">
+              <input
+                className=" bg-gray-100 rounded-2xl mr-4 size-10 text-center"
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              ></input>
+              <button className={buttonCSS} onClick={addProductToCart}>
+                Voeg toe
+              </button>
+            </div>
+          )}
 
-      {/* <p>{product.category}</p> */}
+          {role === "manager" && product.price && (
+            <EditablePriceField
+              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
+              fieldName="salesPrice"
+              product={product}
+              setProduct={setProduct}
+            />
+          )}
+
+          {role === "manager" && product.name && (
+            <button onClick={deleteProduct}>delete product</button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }

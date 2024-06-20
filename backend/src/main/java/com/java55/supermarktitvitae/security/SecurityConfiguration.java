@@ -38,6 +38,8 @@ public class SecurityConfiguration {
                         .requestMatchers("api/v1/shoppingcarts/**").hasRole("customer")
                         .requestMatchers("api/v1/customers/page-info").hasRole("customer")
                         .requestMatchers("api/v1/managers/page-info").hasRole("manager")
+                        .requestMatchers("api/v1/products/update/**").hasRole("manager")
+                        .requestMatchers("api/v1/products/remove/**").hasRole("manager")
                         .anyRequest().permitAll()
                 )
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
