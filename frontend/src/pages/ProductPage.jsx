@@ -107,13 +107,6 @@ export default function ProductPage({ setShoppingcartItems }) {
           {role !== "manager" && <div className="mr-10 ">{getPrice()}</div>}
           {role === "manager" && product.price && (
             <EditablePriceField
-        <p>{product.description}</p>
-      </div>
-      <div className="flex items-end mb-8 mx-8 ">
-        <div className="mr-10">{getPrice()}</div>
-        {role === "customer" && (
-          <>
-            <input
               className=" bg-gray-100 rounded-2xl mr-4 size-10 "
               fieldName="price"
               product={product}
