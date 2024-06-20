@@ -3,7 +3,9 @@ package com.java55.supermarktitvitae.product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,5 +34,13 @@ public class ProductController {
         Optional<Product> product = productRepository.findByNameIgnoreCase(name);
         if (product.isEmpty()) return ResponseEntity.notFound().build();
         return ResponseEntity.ok(product.get());
+    }
+
+    @PostMapping
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct,
+                                                 UriComponentsBuilder ucb) {
+        Product savedProduct = productRepository.save(newProduct);
+        URI location = ucb.path("products/{name}").buildAndExpand(savedProduct.getName()).toUri();
+        return ResponseEntity.created(location).body(savedProduct);
     }
 }
