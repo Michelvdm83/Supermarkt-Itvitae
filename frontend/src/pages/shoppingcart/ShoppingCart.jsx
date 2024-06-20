@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function ShoppingCart() {
+export default function ShoppingCart({ getShoppingCart }) {
   const navigate = useNavigate();
   const jwt = sessionStorage.getItem("JWT");
   const role = sessionStorage.getItem("ROLE");
@@ -49,6 +49,7 @@ export default function ShoppingCart() {
               product={product}
               setProducts={setProducts}
               cartId={cartId}
+              getShoppingCart={getShoppingCart}
             />
           ))}
       </ul>

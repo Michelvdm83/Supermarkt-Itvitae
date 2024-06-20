@@ -16,6 +16,14 @@ export default function Login({ role }) {
   const ROLE_STORAGE_LOCATION = "ROLE";
   const MAIN_URL_PART = "http://localhost:8080/api/v1/";
 
+  const jwt = sessionStorage.getItem("JWT");
+
+  useEffect(() => {
+    if (jwt != null) {
+      navigate("/");
+    }
+  }, []);
+
   function login(event) {
     event.preventDefault();
 

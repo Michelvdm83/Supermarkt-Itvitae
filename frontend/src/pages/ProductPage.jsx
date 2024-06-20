@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function ProductPage(setShoppingcartItems) {
+export default function ProductPage({ setShoppingcartItems }) {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const { productName } = useParams();
@@ -58,6 +58,7 @@ export default function ProductPage(setShoppingcartItems) {
         .then((data) => {
           setQuantity(1);
           setShoppingcartItems(data.data.shoppingCartProducts);
+          showProductHasBeenAdded();
         })
         .catch((error) => {
           console.log(error);
@@ -81,7 +82,7 @@ export default function ProductPage(setShoppingcartItems) {
         <p>{product.description}</p>
       </div>
       <div className="flex items-end mb-8 mx-8 ">
-        <p className="mr-10">{getPrice()}</p>
+        <div className="mr-10">{getPrice()}</div>
         {role === "customer" && (
           <>
             <input
@@ -96,8 +97,6 @@ export default function ProductPage(setShoppingcartItems) {
           </>
         )}
       </div>
-
-      {/* <p>{product.category}</p> */}
     </div>
   );
 }
