@@ -16,17 +16,18 @@ export default function App() {
   const navigate = useNavigate();
 
   const [searchResults, setSearchResults] = useState([]);
+  const [shoppingcartItems, setShoppingcartItems] = useState([])
 
   return (
     <div className="flex items-center justify-center flex-col">
-      <NavigationBar setSearchResults={setSearchResults} />
+      <NavigationBar shoppingcartItems={shoppingcartItems} setSearchResults={setSearchResults} />
       <Routes>
         <Route path="/login" element={<Login role="customer" />} />
         <Route path="/login-manager" element={<Login role="manager" />} />
         <Route path="/sales" element={<Sales />} />
         <Route path="/products" element={<CategoryPage />} />
         <Route path="/" element={<Home />} />
-        <Route path="products/:productName" element={<ProductPage />} />
+        <Route path="products/:productName"  element={<ProductPage setShoppingcartItems={setShoppingcartItems} />} />
         {/* apostrophes cant be ignored in the backend
         for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
         <Route

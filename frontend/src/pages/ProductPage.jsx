@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function ProductPage() {
+export default function ProductPage(setShoppingcartItems) {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const { productName } = useParams();
@@ -55,8 +55,9 @@ export default function ProductPage() {
             },
           }
         )
-        .then(() => {
+        .then((data) => {
           setQuantity(1);
+          setShoppingcartItems(data.data.shoppingCartProducts);
         })
         .catch((error) => {
           console.log(error);
