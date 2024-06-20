@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import LoginForm from "../../components/LoginForm/LoginForm";
+import Banner from "../../components/Banner/Banner";
 
 export default function Login({ role }) {
   const navigate = useNavigate();
@@ -47,8 +48,10 @@ export default function Login({ role }) {
   }
 
   return (
-    <div className="flex flex-col justify-center content-center items-center gap-4 w-full h-full">
-      <h1>{title}</h1>
+    <div className=" w-1/2 flex flex-col mt-8 justify-center content-center items-center gap-4 border-2 rounded-2xl shadow-xl">
+      <div className="w-1/4 mb-4">
+        <Banner bannerText={title} />
+      </div>
       <LoginForm
         email={email}
         setEmail={setEmail}
@@ -57,17 +60,29 @@ export default function Login({ role }) {
         login={login}
       />
       {role === "customer" && (
-        <span className="cursor-pointer" onClick={() => navigate("/register")}>
-          Klik hier om als nieuwe klant te registreren
-        </span>
+        <p>
+          Klik
+          <span
+            className="cursor-pointer text-nn-green"
+            onClick={() => navigate("/register")}
+          >
+            {} hier {}
+            {/*haakjes om een spatie te houden na opslaan met prettier*/}
+          </span>
+          om als nieuwe klant te registreren
+        </p>
       )}
       {role === "customer" && (
-        <span
-          className="cursor-pointer"
-          onClick={() => navigate("/login-manager")}
-        >
-          Klik hier voor Manager login
-        </span>
+        <p className="mb-4">
+          Klik
+          <span
+            className="cursor-pointer text-nn-green"
+            onClick={() => navigate("/login-manager")}
+          >
+            {} hier {}
+          </span>
+          voor Manager login
+        </p>
       )}
     </div>
   );

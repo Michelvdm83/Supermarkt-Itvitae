@@ -19,7 +19,7 @@ export default function SearchBar({ setSearchResults }) {
   return (
     <div className="border-nn-green min-w-fit border-2 rounded-2xl">
       <input
-        className="ml-4"
+        className="ml-4 focus:outline-none"
         type="text"
         placeholder="Zoeken..."
         value={text}
