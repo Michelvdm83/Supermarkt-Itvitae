@@ -1,6 +1,11 @@
+import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-export default function ProductBoxShoppingCart({ product }) {
+export default function ProductBoxShoppingCart({
+  product,
+  setProducts,
+  cartId,
+}) {
   const navigate = useNavigate();
 
   const NLEuro = new Intl.NumberFormat("nl-NL", {
@@ -8,7 +13,25 @@ export default function ProductBoxShoppingCart({ product }) {
     currency: "EUR",
   });
 
-  const deleteProductFromCart = () => {};
+  const deleteProductFromCart = () => {
+    axios
+      .patch(
+        `http://localhost:8080/api/v1/shoppingcarts`,
+        {
+          /*UUID shoppingCartId, UUID shoppingCartProductId*/
+          shoppingCartId: cartId,
+          shoppingCartProductId: product.uuid,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + window.sessionStorage.getItem("JWT"),
+          },
+        }
+      )
+      .then((response) => setProducts(response.data.shoppingCartProducts))
+      .catch((error) => console.log(error));
+  };
 
   return (
     <>
