@@ -7,7 +7,7 @@ export default function AddProduct() {
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
-  const [price, setPrice] = useState(0);
+  const [price, setPrice] = useState(0.01);
   const [salesPrice, setSalesPrice] = useState(0);
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState();
@@ -82,12 +82,12 @@ export default function AddProduct() {
                 className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
                 type="number"
                 required
-                min={0}
+                min={0.01}
                 step={0.01}
                 placeholder="product prijs"
                 value={price}
                 onChange={(event) => {
-                  setPrice(event.target.value);
+                  setPrice(parseFloat(event.target.value));
                   console.log(price);
                 }}
                 autoComplete="false"
@@ -105,7 +105,7 @@ export default function AddProduct() {
                 placeholder="aanbiedingsprijs"
                 value={salesPrice}
                 onChange={(event) => {
-                  setSalesPrice(event.target.value);
+                  setSalesPrice(parseFloat(event.target.value));
                   console.log(salesPrice);
                 }}
                 autoComplete="false"
