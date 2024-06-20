@@ -3,7 +3,6 @@ import NavigationBar from "./components/NavigationBar/NavigationBar";
 import Sales from "./pages/Sales/Sales";
 import ProductPage from "./pages/ProductPage";
 import "./index.css";
-import "./App.css";
 import Login from "./pages/login/Login";
 import { useState } from "react";
 import ProductSearch from "./pages/productsearch/ProductSearch";

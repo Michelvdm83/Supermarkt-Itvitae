@@ -40,6 +40,50 @@ public class ProductController {
         return productRepository.findByCategory(category);
     }
 
+    @PatchMapping("/update/{name}")
+    public ResponseEntity<Product> updateProduct(@PathVariable String name, @RequestParam Boolean updateSales, @RequestBody ProductPatchDTO productPatchDTO) {
+
+        if (name == null || name.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var possibleProduct = productRepository.findByNameIgnoreCase(name);
+        if (possibleProduct.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        Product productToUpdate = possibleProduct.get();
+
+        if (productPatchDTO.description() != null && !productPatchDTO.description().isBlank()) {
+            productToUpdate.setDescription(productPatchDTO.description().trim());
+        }
+        if (productPatchDTO.price() != null && productPatchDTO.price() > 0) {
+            productToUpdate.setPrice(productPatchDTO.price());
+        }
+        if (updateSales) {
+            if (productPatchDTO.salesPrice() == null || productPatchDTO.salesPrice() > 0) {
+                productToUpdate.setSalesPrice(productPatchDTO.salesPrice());
+            }
+        }
+
+        return ResponseEntity.ok(productRepository.save(productToUpdate));
+    }
+
+    @DeleteMapping("/remove/{name}")
+    public ResponseEntity<?> removeProduct(@PathVariable String name) {
+        if (name == null || name.isBlank()) {
+            return ResponseEntity.badRequest().build();
+        }
+        var possibleProduct = productRepository.findByNameIgnoreCase(name);
+        if (possibleProduct.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var productToDelete = possibleProduct.get();
+        productToDelete.setActive(false);
+        productRepository.save(productToDelete);
+        return ResponseEntity.noContent().build();
+    }
+
     @GetMapping("/bestsales")
     public List<Product> getFiveBestSales() {
 

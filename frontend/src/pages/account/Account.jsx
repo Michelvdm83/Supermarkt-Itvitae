@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Banner from "../../components/Banner/Banner";
 
 export default function Account() {
   const [pageData, setPageData] = useState({});
@@ -41,19 +42,37 @@ export default function Account() {
   }
 
   return (
-    <div>
-      {pageData && <div>{pageData.name}</div>}
-      {pageData && <div>{pageData.email}</div>}
-      {mostBought &&
-        sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" &&
-        mostBought.map((product) => (
-          <div key={product.productname}>
-            {product.quantity}x {product.productname}
+    <div className="flex-col w-1/2 mt-16  gap-8 flex">
+      <div className="flex flex-col gap-8 border-2 rounded-2xl shadow-xl">
+        {pageData && (
+          <div className="flex justify-center mt-8 text-lg font-medium">
+            Welkom, {pageData.name}!
           </div>
-        ))}
-      <button className=" bg-gray-400 rounded m-1 p-1" onClick={logout}>
-        logout
-      </button>
+        )}
+        {pageData && (
+          <div className="flex justify-center">{pageData.email}</div>
+        )}
+
+        <button
+          className="mb-4 mx-4 bg-gray-400 rounded m-1 p-1"
+          onClick={logout}
+        >
+          Uitloggen
+        </button>
+      </div>
+      <Banner bannerText="Meest gekocht" />
+      <div className="flex items-stretch justify-between">
+        {mostBought &&
+          sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" &&
+          mostBought.map((product) => (
+            <div
+              key={product.productname}
+              className="gap-8 border-2 rounded-2xl shadow-xl w-40 h-28 flex justify-center items-center"
+            >
+              {product.quantity}x {product.productname}
+            </div>
+          ))}
+      </div>
     </div>
   );
 }

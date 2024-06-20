@@ -22,7 +22,7 @@ export default function Sales() {
   }, []);
 
   return (
-    <div className="w-1/3 flex flex-col justify-center">
+    <div className="w-1/3 flex flex-col justify-center gap-8">
       <Banner bannerText="In de aanbieding" />
       <ul className=" flex flex-col gap-4">
         {sales.map((product) => (
