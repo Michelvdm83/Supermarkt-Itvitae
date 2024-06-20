@@ -7,6 +7,7 @@ export default {
         "nn-orange": "#F08650",
         "nn-green": "#B5E61D",
         "nn-pink": "#FFAEC9",
+        "nn-green-faded": "#D2FF6F",
       },
     },
   },
