@@ -61,10 +61,26 @@ public class ShoppingCartController {
         if (possibleProduct.isEmpty()) return ResponseEntity.notFound().build();
         Product product = possibleProduct.get();
 
-        ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, shoppingCartAddProductDto.quantity());
-        shoppingCartProductRepository.save(shoppingCartProduct);
+        var shoppingCartProducts = shoppingCart.getShoppingCartProducts();
+        ShoppingCartProduct shoppingCartProduct = new ShoppingCartProduct();
 
-        shoppingCart.addProduct(shoppingCartProduct);
+        boolean isNewProduct = true;
+        for (ShoppingCartProduct current : shoppingCartProducts) {
+            if (current.getProduct().getName().equals(product.getName())) {
+                int oldQuantity = current.getQuantity();
+                int quantityToAdd = shoppingCartAddProductDto.quantity();
+                current.setQuantity(oldQuantity + quantityToAdd);
+                isNewProduct = false;
+                shoppingCartProduct = current;
+                break;
+            }
+        }
+
+        if (isNewProduct) {
+            shoppingCartProduct = new ShoppingCartProduct(shoppingCart, product, shoppingCartAddProductDto.quantity());
+            shoppingCart.addProduct(shoppingCartProduct);
+        }
+        shoppingCartProductRepository.save(shoppingCartProduct);
 
         var uri = ucb.path("api/v1/shoppingcarts/{id}").buildAndExpand(shoppingCart.getId()).toUri();
         return ResponseEntity.created(uri).body(ShoppingCartDto.from(shoppingCart));
