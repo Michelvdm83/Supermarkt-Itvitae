@@ -58,10 +58,11 @@ export default function EditablePriceField({ fieldName, product, setProduct }) {
   }
 
   return (
-    <div className="flex">
+    <div className="flex gap-4">
       <div>{title}: </div>
       <div>€</div>
       <input
+        className="w-12 bg-gray-100 rounded-2xl mr-4 size-10 "
         type="number"
         step={0.01}
         value={priceEdit}

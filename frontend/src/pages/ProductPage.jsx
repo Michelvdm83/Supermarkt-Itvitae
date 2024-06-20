@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import AddProductButton from "../components/AddProductButton/AddProductButton";
 import EditablePriceField from "../components/EditablePriceField/EditablePriceField";
 import EditableDescriptionField from "../components/EditableDescriptionField/EditableDescriptionField";
 
@@ -94,43 +93,52 @@ export default function ProductPage() {
     <div className="flex gap-8 border-2 rounded-2xl shadow-xl mt-20 w-1/3 h-80 ">
       <div className="flex flex-col size-40 gap-8 mt-10 ml-12">
         <p className="text-lg font-medium">{product.name}</p>
-      </div>
-      {role !== "manager" && <div>{getPrice()}</div>}
-      {role === "manager" && product.price && (
-        <EditablePriceField
-          fieldName="price"
-          product={product}
-          setProduct={setProduct}
-        />
-      )}
-      {role === "manager" && product.price && (
-        <EditablePriceField
-          fieldName="salesPrice"
-          product={product}
-          setProduct={setProduct}
-        />
-      )}
-
-      {role !== "manager" && <p>{product.description}</p>}
-      {role === "manager" && product.description && (
-        <EditableDescriptionField product={product} setProduct={setProduct} />
-      )}
-      {role === "manager" && product.name && (
-        <button onClick={deleteProduct}>delete product</button>
-      )}
-      {role === "customer" && (
-        <>
-          <input
+        {role !== "manager" && <p>{product.description}</p>}
+        {role === "manager" && product.description && (
+          <EditableDescriptionField
             className=" bg-gray-100 rounded-2xl mr-4 size-10 "
-            type="number"
-            value={quantity}
-            onChange={(e) => setQuantity(e.target.value)}
-          ></input>
-          <button className={buttonCSS} onClick={addProductToCart}>
-            Voeg toe
-          </button>
-        </>
-      )}
+            product={product}
+            setProduct={setProduct}
+          />
+        )}
+        <div className="flex flex-col items-end mb-8 mx-8 ">
+          {role !== "manager" && <div className="mr-10 ">{getPrice()}</div>}
+          {role === "manager" && product.price && (
+            <EditablePriceField
+              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
+              fieldName="price"
+              product={product}
+              setProduct={setProduct}
+            />
+          )}
+          {role === "customer" && (
+            <div className="flex">
+              <input
+                className=" bg-gray-100 rounded-2xl mr-4 size-10 text-center"
+                type="number"
+                value={quantity}
+                onChange={(e) => setQuantity(e.target.value)}
+              ></input>
+              <button className={buttonCSS} onClick={addProductToCart}>
+                Voeg toe
+              </button>
+            </div>
+          )}
+
+          {role === "manager" && product.price && (
+            <EditablePriceField
+              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
+              fieldName="salesPrice"
+              product={product}
+              setProduct={setProduct}
+            />
+          )}
+
+          {role === "manager" && product.name && (
+            <button onClick={deleteProduct}>delete product</button>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
