@@ -1,5 +1,6 @@
 package com.java55.supermarktitvitae.product;
 
+import com.java55.supermarktitvitae.category.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     Optional<Product> findByNameIgnoreCase(String name);
 
     Optional<Product> findByName(String name);
+
+    List<Product> findByCategory(Category category);
 }
