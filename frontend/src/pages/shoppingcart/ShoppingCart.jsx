@@ -14,11 +14,11 @@ export default function ShoppingCart() {
   useEffect(() => {
     if (jwt == null) {
       navigate("/login");
-    }
-    if (role !== "customer") {
+    } else if (role !== "customer") {
       navigate("/");
+    } else {
+      getShoppingCartContent();
     }
-    getShoppingCartContent();
   }, []);
 
   const getShoppingCartContent = () => {
