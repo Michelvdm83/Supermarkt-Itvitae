@@ -25,7 +25,18 @@ export default function AddProduct() {
   }
 
   function handleSubmit() {
-    console.log("Click");
+    let tempSalesPrice = salesPrice;
+    if (tempSalesPrice === 0) {
+      tempSalesPrice = null;
+    }
+    const product = {
+      name: name,
+      description: description,
+      price: price,
+      salesPrice: tempSalesPrice,
+      category: category,
+    };
+    console.log(product);
   }
 
   return (
