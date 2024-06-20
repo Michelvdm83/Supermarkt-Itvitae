@@ -56,7 +56,7 @@ public class ShoppingCartController {
         } else {
             shoppingCart = possibleShoppingCarts.get();
         }
-    
+
         var possibleProduct = productRepository.findByName(shoppingCartAddProductDto.productName());
         if (possibleProduct.isEmpty()) return ResponseEntity.notFound().build();
         Product product = possibleProduct.get();
@@ -68,5 +68,28 @@ public class ShoppingCartController {
 
         var uri = ucb.path("api/v1/shoppingcarts/{id}").buildAndExpand(shoppingCart.getId()).toUri();
         return ResponseEntity.created(uri).body(ShoppingCartDto.from(shoppingCart));
+    }
+
+    @PatchMapping
+    public ResponseEntity<ShoppingCartDto> removeProduct(@RequestBody ShoppingCartRemoveProductDto shoppingCartRemoveProductDto) {
+        var possibleCart = shoppingCartRepository.findById(shoppingCartRemoveProductDto.shoppingCartId());
+        if (possibleCart.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var currentCart = possibleCart.get();
+
+        var possibleCartProduct = shoppingCartProductRepository.findById(shoppingCartRemoveProductDto.shoppingCartProductId());
+        if (possibleCartProduct.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var productToRemove = possibleCartProduct.get();
+
+        if (currentCart.getShoppingCartProducts().contains(productToRemove)) {
+            currentCart.removeProduct(productToRemove);
+            shoppingCartProductRepository.delete(productToRemove);
+        } else {
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(ShoppingCartDto.from(currentCart));
     }
 }
