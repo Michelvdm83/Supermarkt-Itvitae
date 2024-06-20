@@ -8,4 +8,7 @@ import java.util.UUID;
 
 public interface ShoppingCartProductRepository extends JpaRepository<ShoppingCartProduct, UUID> {
     List<ShoppingCartProduct> findByShoppingCart_Customer(Customer customer);
+
+    List<ShoppingCartProduct> findByShoppingCart_CustomerAndShoppingCart_IsPayedTrue(Customer customer);
+
 }
