@@ -8,7 +8,7 @@ export default function AddProduct() {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [salesPrice, setSalesPrice] = useState(null);
+  const [salesPrice, setSalesPrice] = useState(0);
   const [category, setCategory] = useState("");
 
   function handleSubmit() {
@@ -23,23 +23,23 @@ export default function AddProduct() {
         </div>
       )}
       {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
-        <div className="flex flex-col items-center my-8">
+        <div className="flex flex-col items-center my-8 text-lg">
           <p>Een product toevoegen:</p>
 
           <div className="flex flex-col items-end">
             <div className="flex my-2">
               <p className="mx-2">Naam</p>
               <input
-                className="border-2 focus:outline-none invalid:border-red-700 valid:border-green-700"
+                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
                 type="text"
+                minLength={3}
+                required
                 placeholder="product naam"
                 value={name}
                 onChange={(event) => {
                   setName(event.target.value);
                   console.log(name);
                 }}
-                required
-                minLength={3}
                 autoComplete="false"
                 key="name"
               />
@@ -48,18 +48,55 @@ export default function AddProduct() {
             <div className="flex my-2">
               <p className="mx-2">Omschrijving</p>
               <input
-                className="border-2 focus:outline-none invalid:border-red-700 valid:border-green-700"
+                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
                 type="text"
+                minLength={5}
+                required
                 placeholder="product omschrijving"
                 value={description}
                 onChange={(event) => {
                   setDescription(event.target.value);
                   console.log(description);
                 }}
-                required
-                minLength={5}
                 autoComplete="false"
                 key="description"
+              />
+            </div>
+
+            <div className="flex my-2">
+              <p className="mx-2">Prijs in €</p>
+              <input
+                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
+                type="number"
+                required
+                min={0}
+                step={0.01}
+                placeholder="product prijs"
+                value={price}
+                onChange={(event) => {
+                  setPrice(event.target.value);
+                  console.log(price);
+                }}
+                autoComplete="false"
+                key="price"
+              />
+            </div>
+
+            <div className="flex my-2">
+              <p className="mx-2">(optioneel) Aanbiedingsprijs in €</p>
+              <input
+                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
+                type="number"
+                min={0}
+                step={0.01}
+                placeholder="aanbiedingsprijs"
+                value={salesPrice}
+                onChange={(event) => {
+                  setSalesPrice(event.target.value);
+                  console.log(salesPrice);
+                }}
+                autoComplete="false"
+                key="salesPrice"
               />
             </div>
           </div>
