@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function AddProduct() {
   const USERNAME_STORAGE_LOCATION = "USERNAME";
@@ -10,6 +10,19 @@ export default function AddProduct() {
   const [price, setPrice] = useState(0);
   const [salesPrice, setSalesPrice] = useState(0);
   const [category, setCategory] = useState("");
+  const [categories, setCategories] = useState();
+
+  useEffect(getCategories, []);
+
+  function getCategories() {
+    fetch(`http://localhost:8080/api/v1/categories`)
+      .then((response) => response.json())
+      .then((body) => {
+        setCategories(body);
+        setCategory(body[0]);
+      })
+      .catch((error) => console.log(error));
+  }
 
   function handleSubmit() {
     console.log("Click");
@@ -98,6 +111,27 @@ export default function AddProduct() {
                 autoComplete="false"
                 key="salesPrice"
               />
+            </div>
+
+            <div className="flex my-2">
+              <p className="mx-2">Categorie</p>
+              <select
+                onChange={(event) => {
+                  setCategory(event.target.value);
+                  console.log(category);
+                }}
+                name="category"
+                id="category"
+                className="w-56"
+              >
+                {categories &&
+                  categories.map((catagoryOption) => (
+                    <option key={catagoryOption} value={catagoryOption}>
+                      {catagoryOption.charAt(0) +
+                        catagoryOption.slice(1).toLowerCase()}
+                    </option>
+                  ))}
+              </select>
             </div>
           </div>
 
