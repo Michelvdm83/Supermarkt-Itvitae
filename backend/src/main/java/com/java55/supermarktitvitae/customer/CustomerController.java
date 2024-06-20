@@ -60,6 +60,11 @@ public class CustomerController {
         ));
     }
 
+    @PostMapping("register")
+    public ResponseEntity<Customer> register(@RequestBody Customer newCustomer) {
+        
+    }
+
     @GetMapping("page-info")
     public ResponseEntity<CustomerPageDTO> getInfo(Authentication authentication) {
         Customer thisCustomer = (Customer) authentication.getPrincipal();
