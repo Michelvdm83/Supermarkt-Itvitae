@@ -60,7 +60,7 @@ export default function App() {
         {/* apostrophes cant be ignored in the backend
         for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
         <Route
-          path="/zoeken"
+          path="/search"
           element={<ProductSearch searchResults={searchResults} />}
         />
         <Route path="category/:categoryName" element={<ProductsByCategory />} />
