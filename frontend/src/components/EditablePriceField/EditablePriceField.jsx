@@ -10,7 +10,7 @@ export default function EditablePriceField({ fieldName, product, setProduct }) {
       : Number(product.salesPrice).toFixed(2);
   const [priceEdit, setPriceEdit] = useState(original);
   const [editingPrice, setEditingPrice] = useState(false);
-  const [priceButtonText, setPriceButtonText] = useState("edit");
+  const [priceButtonText, setPriceButtonText] = useState("Edit");
 
   const title = fieldName === "price" ? "prijs" : "aanbiedingsprijs";
 
@@ -54,15 +54,15 @@ export default function EditablePriceField({ fieldName, product, setProduct }) {
         .catch((error) => alert("Er is iets fout gegaan bij het opslaan"));
     }
     setEditingPrice(!editingPrice);
-    setPriceButtonText(priceButtonText === "edit" ? "save" : "edit");
+    setPriceButtonText(priceButtonText === "Edit" ? "Save" : "Edit");
   }
 
   return (
-    <div className="flex gap-4">
-      <div>{title}: </div>
+    <div className="flex justify-center items-center">
+      <div className="font-semibold mr-2">{title}: </div>
       <div>€</div>
       <input
-        className="w-12 bg-gray-100 rounded-2xl mr-4 size-10 "
+        className="bg-gray-100 rounded-2xl w-12"
         type="number"
         step={0.01}
         value={priceEdit}
@@ -71,7 +71,12 @@ export default function EditablePriceField({ fieldName, product, setProduct }) {
         }}
         disabled={!editingPrice}
       />
-      <button onClick={handleClick}>{priceButtonText}</button>
+      <button
+        className="text-white bg-nn-green h-8 w-12 rounded-2xl font-extrabold flex justify-center items-center"
+        onClick={handleClick}
+      >
+        {priceButtonText}
+      </button>
     </div>
   );
 }
