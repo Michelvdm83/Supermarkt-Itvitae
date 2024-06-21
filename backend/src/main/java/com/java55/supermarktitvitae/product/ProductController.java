@@ -132,6 +132,7 @@ public class ProductController {
         if (productRepository.findByNameIgnoreCase(newProduct.getName()).isPresent()) {
             return ResponseEntity.badRequest().build();
         }
+        newProduct.setActive(true);
         Product savedProduct = productRepository.save(newProduct);
         URI location = ucb.path("products/{name}").buildAndExpand(savedProduct.getName()).toUri();
         return ResponseEntity.created(location).body(savedProduct);
