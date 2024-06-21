@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function AddProduct() {
   const USERNAME_STORAGE_LOCATION = "USERNAME";
   const TOKEN_STORAGE_LOCATION = "JWT";
   const ROLE_STORAGE_LOCATION = "ROLE";
+  const navigate = useNavigate();
 
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
@@ -36,7 +38,19 @@ export default function AddProduct() {
       salesPrice: tempSalesPrice ? +tempSalesPrice.toFixed(2) : tempSalesPrice,
       category: category,
     };
-    console.log(product);
+
+    fetch("http://localhost:8080/api/v1/products/addNew", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization:
+          "Bearer " + sessionStorage.getItem(TOKEN_STORAGE_LOCATION),
+      },
+      body: JSON.stringify(product),
+    })
+      .then((response) => response.json())
+      .then((body) => navigate("/products/" + body.name))
+      .catch((error) => alert("Product kon niet worden toegevoegd"));
   }
 
   function checkValues() {
