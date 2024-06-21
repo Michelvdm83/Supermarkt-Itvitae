@@ -28,7 +28,7 @@ public class ShoppingCartController {
 
         var possibleShoppingCarts = shoppingCartRepository.findByCustomerAndIsPayed(customer, false);
         if (possibleShoppingCarts.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         } else {
             shoppingCart = possibleShoppingCarts.get();
         }
@@ -107,5 +107,19 @@ public class ShoppingCartController {
             return ResponseEntity.badRequest().build();
         }
         return ResponseEntity.ok(ShoppingCartDto.from(currentCart));
+    }
+
+    @PatchMapping("/checkout")
+    public ResponseEntity<?> checkout(Authentication authentication) {
+        Customer customer = (Customer) authentication.getPrincipal();
+        var possibleShoppingCart = shoppingCartRepository.findByCustomerAndIsPayed(customer, false);
+        if (possibleShoppingCart.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        var payedShoppingCart = possibleShoppingCart.get();
+        payedShoppingCart.setPayed(true);
+        shoppingCartRepository.save(payedShoppingCart);
+
+        return ResponseEntity.noContent().build();
     }
 }
