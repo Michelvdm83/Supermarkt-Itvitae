@@ -118,7 +118,7 @@ export default function ProductPage({ setShoppingcartItems }) {
                 className=" bg-gray-100 rounded-2xl mr-4 size-10 text-center"
                 type="number"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(Math.round(e.target.value))}
               ></input>
               <button className={buttonCSS} onClick={addProductToCart}>
                 Voeg toe
