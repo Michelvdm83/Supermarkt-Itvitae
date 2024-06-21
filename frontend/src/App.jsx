@@ -15,8 +15,6 @@ import axios from "axios";
 import Register from "./pages/customerregistration/Register.jsx";
 
 export default function App() {
-  const navigate = useNavigate();
-
   const [searchResults, setSearchResults] = useState([]);
   const [shoppingcartItems, setShoppingcartItems] = useState([]);
 
@@ -61,8 +59,6 @@ export default function App() {
           path="products/:productName"
           element={<ProductPage setShoppingcartItems={setShoppingcartItems} />}
         />
-        {/* apostrophes cant be ignored in the backend
-        for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
         <Route
           path="/search"
           element={<ProductSearch searchResults={searchResults} />}
@@ -74,7 +70,6 @@ export default function App() {
           element={<ShoppingCart getShoppingCart={getShoppingCart} />}
         />
         <Route path="/register" element={<Register />} />
-        <Route path="/shoppingcart" element={<ShoppingCart />} />
       </Routes>
     </div>
   );
