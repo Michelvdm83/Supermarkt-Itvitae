@@ -12,6 +12,7 @@ import Home from "./pages/home/Home";
 import ShoppingCart from "./pages/shoppingcart/ShoppingCart.jsx";
 import ProductsByCategory from "./pages/ProductsByCategory/ProductsByCategory.jsx";
 import axios from "axios";
+import Register from "./pages/customerregistration/Register.jsx";
 
 export default function App() {
   const navigate = useNavigate();
@@ -69,6 +70,8 @@ export default function App() {
           path="/shoppingcart"
           element={<ShoppingCart getShoppingCart={getShoppingCart} />}
         />
+        <Route path="/register" element={<Register />} />
+        <Route path="/shoppingcart" element={<ShoppingCart />} />
       </Routes>
     </div>
   );
