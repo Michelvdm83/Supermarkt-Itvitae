@@ -72,17 +72,16 @@ export default function Account() {
               {product.quantity}x {product.productname}
             </div>
           ))}
-      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
-        <div className=" my-4">
-          <p className=" font-bold">Hallo Manager</p>
-          <button
-            className="bg-nn-green rounded my-2 p-1"
-            onClick={() => navigate("/add-product")}
-          >
-            Voeg een nieuw product toe aan het assortiment
-          </button>
-        </div>
-      )}
+        {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
+          <div className=" my-4">
+            <button
+              className="bg-nn-green rounded my-2 p-1"
+              onClick={() => navigate("/add-product")}
+            >
+              Voeg een nieuw product toe aan het assortiment
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
