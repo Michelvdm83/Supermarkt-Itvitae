@@ -36,9 +36,14 @@ public class ProductController {
         return ResponseEntity.ok(product.get());
     }
 
-    @PostMapping
+    @PostMapping("/addNew")
     public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct,
                                                  UriComponentsBuilder ucb) {
+        if (newProduct.getName() == null ||
+                newProduct.getDescription() == null ||
+                newProduct.getPrice() <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
         Product savedProduct = productRepository.save(newProduct);
         URI location = ucb.path("products/{name}").buildAndExpand(savedProduct.getName()).toUri();
         return ResponseEntity.created(location).body(savedProduct);
