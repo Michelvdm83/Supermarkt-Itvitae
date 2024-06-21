@@ -19,6 +19,8 @@ export default function App() {
   const [searchResults, setSearchResults] = useState([]);
   const [shoppingcartItems, setShoppingcartItems] = useState([]);
 
+  const navigate = useNavigate();
+
   const getShoppingCart = () => {
     if (sessionStorage.getItem("ROLE") == "customer") {
       axios
