@@ -4,7 +4,7 @@ import { useState } from "react";
 export default function EditableDescriptionField({ product, setProduct }) {
   const [text, setText] = useState(product.description);
   const [editingText, setEditingText] = useState(false);
-  const [buttonText, setButtonText] = useState("edit");
+  const [buttonText, setButtonText] = useState("Edit");
 
   function handleClick() {
     if (editingText) {
@@ -32,19 +32,24 @@ export default function EditableDescriptionField({ product, setProduct }) {
         .catch((error) => alert("Er is iets fout gegaan bij het opslaan"));
     }
     setEditingText(!editingText);
-    setButtonText(buttonText === "edit" ? "save" : "edit");
+    setButtonText(buttonText === "Edit" ? "Save" : "Edit");
   }
 
   return (
-    <div className="flex">
-      <input
+    <div className="flex flex-col bg-gray-100 rounded-2xl">
+      <textarea
         value={text}
         onChange={(e) => {
           setText(e.target.value);
         }}
         disabled={!editingText}
       />
-      <button onClick={handleClick}>{buttonText}</button>
+      <button
+        className="text-white bg-nn-green h-8 w-12 rounded-2xl font-extrabold flex justify-center items-center"
+        onClick={handleClick}
+      >
+        {buttonText}
+      </button>
     </div>
   );
 }
