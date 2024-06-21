@@ -5,7 +5,7 @@ import axios from "axios";
 import EditablePriceField from "../components/EditablePriceField/EditablePriceField";
 import EditableDescriptionField from "../components/EditableDescriptionField/EditableDescriptionField";
 
-export default function ProductPage() {
+export default function ProductPage({ setShoppingcartItems }) {
   const [product, setProduct] = useState({});
   const [quantity, setQuantity] = useState(1);
   const { productName } = useParams();
@@ -59,8 +59,9 @@ export default function ProductPage() {
             },
           }
         )
-        .then(() => {
+        .then((data) => {
           setQuantity(1);
+          setShoppingcartItems(data.data.shoppingCartProducts);
         })
         .catch((error) => {
           console.log(error);
