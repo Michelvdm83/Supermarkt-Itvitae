@@ -44,6 +44,9 @@ public class ProductController {
                 newProduct.getPrice() <= 0) {
             return ResponseEntity.badRequest().build();
         }
+        if (productRepository.findByNameIgnoreCase(newProduct.getName()).isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
         Product savedProduct = productRepository.save(newProduct);
         URI location = ucb.path("products/{name}").buildAndExpand(savedProduct.getName()).toUri();
         return ResponseEntity.created(location).body(savedProduct);
