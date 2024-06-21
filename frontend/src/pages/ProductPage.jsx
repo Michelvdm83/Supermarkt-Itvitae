@@ -87,12 +87,12 @@ export default function ProductPage({ setShoppingcartItems }) {
   });
 
   let buttonCSS =
-    "text-white rounded-2xl font-extrabold h-10 mr-2 p-2 flex justify-center items-center ";
+    "text-white rounded-2xl w-24 font-extrabold h-10 mr-2 p-2 flex justify-center items-center ";
   buttonCSS += product.salesPrice ? "bg-nn-pink" : "bg-nn-green";
 
   return (
-    <div className="flex gap-8 border-2 rounded-2xl shadow-xl mt-20 w-1/3 h-80 ">
-      <div className="flex flex-col size-40 gap-8 mt-10 ml-12">
+    <div className="flex flex-wrap justify-center border-2 w-2/5 h-96 gap-4 rounded-2xl shadow-xl mt-20 ">
+      <div className="flex flex-col w-2/4 mt-8 gap-4">
         <p className="text-lg font-medium">{product.name}</p>
         {role !== "manager" && <p>{product.description}</p>}
         {role === "manager" && product.description && (
@@ -102,20 +102,43 @@ export default function ProductPage({ setShoppingcartItems }) {
             setProduct={setProduct}
           />
         )}
-        <div className="flex flex-col items-end mb-8 mx-8 ">
-          {role !== "manager" && <div className="mr-10 ">{getPrice()}</div>}
-          {role === "manager" && product.price && (
-            <EditablePriceField
-              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
-              fieldName="price"
-              product={product}
-              setProduct={setProduct}
-            />
+      </div>
+      <div className="flex flex-col justify-between my-8">
+        <div className="flex justify-end">
+          {role === "manager" && product.name && (
+            <button
+              className="text-white bg-red-500 rounded-2xl font-extrabold p-2 flex justify-center items-center"
+              onClick={deleteProduct}
+            >
+              Delete Product
+            </button>
           )}
+        </div>
+        <div className="flex">
+          <div className="flex flex-col items-end">
+            {role === "manager" && product.price && (
+              <EditablePriceField
+                className=""
+                fieldName="price"
+                product={product}
+                setProduct={setProduct}
+              />
+            )}
+            {role === "manager" && product.price && (
+              <EditablePriceField
+                fieldName="salesPrice"
+                product={product}
+                setProduct={setProduct}
+              />
+            )}
+          </div>
+        </div>
+        <div className="flex gap-4 items-center">
+          {role !== "manager" && <div className="">{getPrice()}</div>}
           {role === "customer" && (
-            <div className="flex">
+            <div className="flex ">
               <input
-                className=" bg-gray-100 rounded-2xl mr-4 size-10 text-center"
+                className="bg-gray-100 w-10 rounded-2xl text-center"
                 type="number"
                 value={quantity}
                 onChange={(e) => setQuantity(Math.round(e.target.value))}
@@ -124,19 +147,6 @@ export default function ProductPage({ setShoppingcartItems }) {
                 Voeg toe
               </button>
             </div>
-          )}
-
-          {role === "manager" && product.price && (
-            <EditablePriceField
-              className=" bg-gray-100 rounded-2xl mr-4 size-10 "
-              fieldName="salesPrice"
-              product={product}
-              setProduct={setProduct}
-            />
-          )}
-
-          {role === "manager" && product.name && (
-            <button onClick={deleteProduct}>delete product</button>
           )}
         </div>
       </div>
