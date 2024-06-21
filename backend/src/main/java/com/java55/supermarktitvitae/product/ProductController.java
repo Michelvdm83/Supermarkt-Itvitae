@@ -28,7 +28,7 @@ public class ProductController {
 
     @GetMapping("/sales")
     public List<Product> getSales() {
-        return productRepository.findBySalesPriceNotNullOrderByName();
+        return productRepository.findBySalesPriceNotNullOrderByCategory();
     }
 
     @GetMapping("/{name}")
@@ -92,7 +92,7 @@ public class ProductController {
     @GetMapping("/bestsales")
     public List<Product> getFiveBestSales() {
 
-        List<Product> sales = productRepository.findBySalesPriceNotNullOrderByName();
+        List<Product> sales = productRepository.findBySalesPriceNotNullOrderByCategory();
 
         for (int inner = 0; inner < sales.size(); inner++) {
             Product currentProduct = sales.get(inner);
