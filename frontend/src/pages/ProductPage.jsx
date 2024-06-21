@@ -62,7 +62,6 @@ export default function ProductPage({ setShoppingcartItems }) {
         .then((data) => {
           setQuantity(1);
           setShoppingcartItems(data.data.shoppingCartProducts);
-          showProductHasBeenAdded();
         })
         .catch((error) => {
           console.log(error);
