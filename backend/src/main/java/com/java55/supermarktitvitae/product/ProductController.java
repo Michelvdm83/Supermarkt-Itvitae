@@ -21,6 +21,11 @@ public class ProductController {
         return productRepository.findByNameContainsIgnoreCaseOrderByName(contains);
     }
 
+    @GetMapping("/names")
+    public List<String> getNamesFromSearch(@RequestParam String contains) {
+        return productRepository.findByNameContainsIgnoreCaseOrderByName(contains).stream().map(Product::getName).toList();
+    }
+
     @GetMapping("/sales")
     public List<Product> getSales() {
         return productRepository.findBySalesPriceNotNullOrderByCategory();
