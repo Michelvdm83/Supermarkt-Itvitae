@@ -4,7 +4,9 @@ import com.java55.supermarktitvitae.category.Category;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,4 +120,21 @@ public class ProductController {
 
     }
 
+
+    @PostMapping("/addNew")
+    public ResponseEntity<Product> addNewProduct(@RequestBody Product newProduct,
+                                                 UriComponentsBuilder ucb) {
+        if (newProduct.getName() == null ||
+                newProduct.getDescription() == null ||
+                newProduct.getPrice() <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        if (productRepository.findByNameIgnoreCase(newProduct.getName()).isPresent()) {
+            return ResponseEntity.badRequest().build();
+        }
+        newProduct.setActive(true);
+        Product savedProduct = productRepository.save(newProduct);
+        URI location = ucb.path("products/{name}").buildAndExpand(savedProduct.getName()).toUri();
+        return ResponseEntity.created(location).body(savedProduct);
+    }
 }
