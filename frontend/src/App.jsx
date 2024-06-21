@@ -48,7 +48,10 @@ export default function App() {
         setSearchResults={setSearchResults}
       />
       <Routes>
-        <Route path="/login" element={<Login role="customer" />} />
+        <Route
+          path="/login"
+          element={<Login role="customer" getShoppingCart={getShoppingCart} />}
+        />
         <Route path="/login-manager" element={<Login role="manager" />} />
         <Route path="/sales" element={<Sales />} />
         <Route path="/products" element={<CategoryPage />} />

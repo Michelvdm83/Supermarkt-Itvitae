@@ -4,7 +4,7 @@ import axios from "axios";
 import LoginForm from "../../components/LoginForm/LoginForm";
 import Banner from "../../components/Banner/Banner";
 
-export default function Login({ role }) {
+export default function Login({ role, getShoppingCart }) {
   const navigate = useNavigate();
   const title = (role === "manager" ? "Manager" : "Klant") + " login";
 
@@ -48,6 +48,9 @@ export default function Login({ role }) {
         sessionStorage.setItem(TOKEN_STORAGE_LOCATION, response.data.token);
         sessionStorage.setItem(USERNAME_STORAGE_LOCATION, response.data.name);
         sessionStorage.setItem(ROLE_STORAGE_LOCATION, response.data.role);
+        if (response.data.role === "customer") {
+          getShoppingCart();
+        }
         navigate("/account");
       })
       .catch((error) => {

@@ -65,7 +65,7 @@ public class CustomerController {
         Customer thisCustomer = (Customer) authentication.getPrincipal();
 
 
-        var shoppingcartProducts = shoppingCartProductRepository.findByShoppingCart_CustomerAndProduct_IsActiveTrue(thisCustomer);
+        var shoppingcartProducts = shoppingCartProductRepository.findByShoppingCart_CustomerAndShoppingCart_IsPayedTrueAndProduct_IsActiveTrue(thisCustomer);
 
         Map<Product, Long> timesBought = shoppingcartProducts.stream().collect(Collectors.groupingBy(ShoppingCartProduct::getProduct, Collectors.counting()));
         var mostBought = timesBought.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(5).map(Map.Entry::getKey).toList();
