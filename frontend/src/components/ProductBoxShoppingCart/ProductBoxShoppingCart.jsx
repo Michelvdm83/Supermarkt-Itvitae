@@ -5,6 +5,7 @@ export default function ProductBoxShoppingCart({
   product,
   setProducts,
   cartId,
+  getShoppingCart,
 }) {
   const navigate = useNavigate();
 
@@ -29,7 +30,10 @@ export default function ProductBoxShoppingCart({
           },
         }
       )
-      .then((response) => setProducts(response.data.shoppingCartProducts))
+      .then((response) => {
+        setProducts(response.data.shoppingCartProducts);
+        getShoppingCart();
+      })
       .catch((error) => console.log(error));
   };
 

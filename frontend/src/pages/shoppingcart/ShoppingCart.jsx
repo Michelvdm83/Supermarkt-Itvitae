@@ -4,7 +4,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 
-export default function ShoppingCart() {
+export default function ShoppingCart({ getShoppingCart }) {
   const navigate = useNavigate();
   const jwt = sessionStorage.getItem("JWT");
   const role = sessionStorage.getItem("ROLE");
@@ -30,17 +30,52 @@ export default function ShoppingCart() {
         },
       })
       .then((response) => {
-        setCartId(response.data.shoppingCartId);
-        setProducts(response.data.shoppingCartProducts);
+        if (response.data === "") {
+          setCartId("");
+          setProducts([]);
+        } else {
+          setCartId(response.data.shoppingCartId);
+          setProducts(response.data.shoppingCartProducts);
+        }
       })
       .catch((error) => {
         console.log(error);
       });
   };
 
+  function checkout() {
+    axios
+      .patch(
+        "http://localhost:8080/api/v1/shoppingcarts/checkout",
+        {},
+        {
+          headers: {
+            Authorization: "Bearer " + jwt,
+          },
+        }
+      )
+      .then(() => {
+        setCartId("");
+        setProducts([]);
+      })
+      .catch((error) => {
+        alert("Betaling is niet gelukt");
+      });
+  }
+
   return (
     <div className="w-1/3 flex flex-col justify-center">
       <Banner bannerText="In uw winkelmandje" />
+      {products.length > 0 && (
+        <div className=" self-center">
+          <button
+            onClick={checkout}
+            className="text-white bg-nn-green mb-4 rounded-2xl font-extrabold h-10 w-20 mr-2 mt-6 justify-center items-center"
+          >
+            Afrekenen
+          </button>
+        </div>
+      )}
       <ul className="mt-12 flex flex-col gap-4">
         {products !== null &&
           products.map((product) => (
@@ -49,6 +84,7 @@ export default function ShoppingCart() {
               product={product}
               setProducts={setProducts}
               cartId={cartId}
+              getShoppingCart={getShoppingCart}
             />
           ))}
       </ul>

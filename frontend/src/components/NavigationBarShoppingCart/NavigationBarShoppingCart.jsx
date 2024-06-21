@@ -1,6 +1,7 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function NavigationBarShoppingCart({ title, page }) {
+export default function NavigationBarShoppingCart({ title, page, shoppingcartItems }) {
   const navigate = useNavigate();
 
   return (
@@ -8,7 +9,7 @@ export default function NavigationBarShoppingCart({ title, page }) {
       className=" text-nn-green text-xl font-medium "
       onClick={() => navigate("/" + page)}
     >
-      {title}
+      {title + " (" + shoppingcartItems.length + ")"}
     </button>
   );
 }
