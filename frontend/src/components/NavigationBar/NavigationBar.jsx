@@ -1,8 +1,9 @@
 import HomeButton from "../HomeButton/HomeButton";
 import NavigationBarItem from "../NavigationBarItem/NavigationBarItem";
+import NavigationBarShoppingCart from "../NavigationBarShoppingCart/NavigationBarShoppingCart";
 import SearchBar from "../SearchBar/SearchBar";
 
-export default function NavigationBar({ setSearchResults }) {
+export default function NavigationBar({ shoppingcartItems, setSearchResults }) {
   return (
     <div className="bg-white flex-wrap min-w-fit inset-y-0 sticky h-28 w-screen flex border-4 rounded-2xl shadow-xl justify-around items-center content-center">
       <HomeButton />
@@ -15,7 +16,15 @@ export default function NavigationBar({ setSearchResults }) {
       ) : (
         <NavigationBarItem title="Inloggen/Registreren" page="login" />
       )}
-      <NavigationBarItem title="Winkelmandje" page="shoppingcart" />
+      {sessionStorage.getItem("ROLE") == "customer" ? (
+        <NavigationBarShoppingCart
+          shoppingcartItems={shoppingcartItems}
+          title="Winkelmandje"
+          page="shoppingcart"
+        />
+      ) : (
+        <NavigationBarItem title="Winkelmandje" page="login" />
+      )}
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-export default function ProductBox({ product }) {
+export default function SmallProductBox({ product }) {
   const navigate = useNavigate();
 
   function getPrice() {
@@ -29,12 +29,12 @@ export default function ProductBox({ product }) {
 
   return (
     <button onClick={() => navigate("/products/" + product.name)}>
-      <div className="min-w-fit border-2 rounded-2xl shadow-xl h-32 gap-8 flex">
-        <div className="my-4 ml-8 w-1/2 flex flex-col justify-center items-start">
-          <h3 className="text-lg font-medium m-0  mr-0">{product.name}</h3>
+      <div className="flex w-60 h-40 flex-col items-center border-2 rounded-2xl shadow-xl">
+        <div className="flex flex-col items-center mx-4 my-4">
+          <h3 className="text-lg font-medium">{product.name}</h3>
           <p>{product.description}</p>
         </div>
-        <div className="mb-2 gap-2 mt-16 w-12 flex justify-end items-center">
+        <div className="mb-2 mr-2 flex flex-col justify-center items-center">
           {getPrice()}
         </div>
       </div>
