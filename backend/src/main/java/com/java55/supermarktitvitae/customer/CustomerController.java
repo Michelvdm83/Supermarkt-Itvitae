@@ -14,7 +14,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.UriComponentsBuilder;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -61,8 +63,49 @@ public class CustomerController {
     }
 
     @PostMapping("register")
-    public ResponseEntity<Customer> register(@RequestBody Customer newCustomer) {
+    public ResponseEntity<?> register(@RequestBody Customer newCustomer, UriComponentsBuilder ucb) {
         
+        var userName = newCustomer.getEmail();
+        var possibleCustomer = customerRepository.findByEmail(userName);
+
+        if (possibleCustomer.isPresent()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ProblemDetail.forStatusAndDetail(
+                            HttpStatus.BAD_REQUEST,
+                            "Er bestaat al een account met dit e-mailadres."
+                    ));
+        } else if (newCustomer.getPassword().isEmpty()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ProblemDetail.forStatusAndDetail(
+                            HttpStatus.BAD_REQUEST,
+                            "Voer een wachtwoord in."
+                    ));
+        } else if (newCustomer.getName().isEmpty()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ProblemDetail.forStatusAndDetail(
+                            HttpStatus.BAD_REQUEST,
+                            "Voer een naam in."
+                    ));
+        } else if (newCustomer.getEmail().isEmpty()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(ProblemDetail.forStatusAndDetail(
+                            HttpStatus.BAD_REQUEST,
+                            "Voer een geldig e-mailadres in."
+                    ));
+        }
+
+        newCustomer.setPassword(passwordEncoder.encode(newCustomer.getPassword()));
+
+        customerRepository.save(newCustomer);
+        URI locationOfNewUser = ucb
+                .path("customers/{username}")
+                .buildAndExpand(newCustomer.getUsername())
+                .toUri();
+        return ResponseEntity.created(locationOfNewUser).body(newCustomer);
     }
 
     @GetMapping("page-info")
