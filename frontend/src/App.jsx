@@ -13,6 +13,7 @@ import ShoppingCart from "./pages/shoppingcart/ShoppingCart.jsx";
 import ProductsByCategory from "./pages/ProductsByCategory/ProductsByCategory.jsx";
 import axios from "axios";
 import Register from "./pages/customerregistration/Register.jsx";
+import AddProduct from "./pages/addProduct/AddProduct";
 
 export default function App() {
   const [searchResults, setSearchResults] = useState([]);
@@ -70,6 +71,7 @@ export default function App() {
           element={<ShoppingCart getShoppingCart={getShoppingCart} />}
         />
         <Route path="/register" element={<Register />} />
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </div>
   );

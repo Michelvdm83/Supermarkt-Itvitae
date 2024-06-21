@@ -21,13 +21,24 @@ export default function Sales() {
     fetchSales();
   }, []);
 
+  let currentCategory = "";
   return (
     <div className="w-1/3 flex flex-col justify-center gap-8">
       <Banner bannerText="In de aanbieding" />
       <ul className=" flex flex-col gap-4">
-        {sales.map((product) => (
-          <ProductBox key={product.name} product={product} />
-        ))}
+        {sales.map((product) => {
+          if (product.category === currentCategory) {
+            return <ProductBox key={product.name} product={product} />;
+          } else {
+            currentCategory = product.category;
+            return (
+              <div className="flex flex-col gap-2" key={product.name}>
+                <Banner bannerText={product.category} />
+                <ProductBox product={product} />
+              </div>
+            );
+          }
+        })}
       </ul>
     </div>
   );
