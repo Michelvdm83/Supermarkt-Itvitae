@@ -32,11 +32,30 @@ export default function AddProduct() {
     const product = {
       name: name,
       description: description,
-      price: price,
-      salesPrice: tempSalesPrice,
+      price: +price.toFixed(2),
+      salesPrice: tempSalesPrice ? +tempSalesPrice.toFixed(2) : tempSalesPrice,
       category: category,
     };
     console.log(product);
+  }
+
+  function checkValues() {
+    if (name.length < 3) {
+      return false;
+    }
+    if (description.length < 5) {
+      return false;
+    }
+    if (price < 0.01 || price === NaN) {
+      return false;
+    }
+    if (salesPrice < 0 || salesPrice === NaN) {
+      return false;
+    }
+    if (salesPrice >= price) {
+      return false;
+    }
+    return true;
   }
 
   return (
@@ -61,7 +80,6 @@ export default function AddProduct() {
                 value={name}
                 onChange={(event) => {
                   setName(event.target.value);
-                  console.log(name);
                 }}
                 autoComplete="false"
                 key="name"
@@ -79,7 +97,6 @@ export default function AddProduct() {
                 value={description}
                 onChange={(event) => {
                   setDescription(event.target.value);
-                  console.log(description);
                 }}
                 autoComplete="false"
                 key="description"
@@ -97,8 +114,9 @@ export default function AddProduct() {
                 placeholder="product prijs"
                 value={price}
                 onChange={(event) => {
-                  setPrice(parseFloat(event.target.value));
-                  console.log(price);
+                  setPrice(
+                    event.target.value ? parseFloat(event.target.value) : 0
+                  );
                 }}
                 autoComplete="false"
                 key="price"
@@ -115,8 +133,9 @@ export default function AddProduct() {
                 placeholder="aanbiedingsprijs"
                 value={salesPrice}
                 onChange={(event) => {
-                  setSalesPrice(parseFloat(event.target.value));
-                  console.log(salesPrice);
+                  setSalesPrice(
+                    event.target.value ? parseFloat(event.target.value) : 0
+                  );
                 }}
                 autoComplete="false"
                 key="salesPrice"
@@ -128,7 +147,6 @@ export default function AddProduct() {
               <select
                 onChange={(event) => {
                   setCategory(event.target.value);
-                  console.log(category);
                 }}
                 name="category"
                 id="category"
@@ -145,12 +163,18 @@ export default function AddProduct() {
             </div>
           </div>
 
-          <button
-            className="bg-gray-400 rounded my-2 p-1"
-            onClick={() => handleSubmit()}
-          >
-            Opslaan
-          </button>
+          {checkValues() ? (
+            <button
+              className="bg-nn-green rounded my-2 p-1"
+              onClick={() => handleSubmit()}
+            >
+              Opslaan
+            </button>
+          ) : (
+            <p className="text-gray-500 bg-gray-300 rounded my-2 p-1">
+              Opslaan
+            </p>
+          )}
         </div>
       )}
     </>
