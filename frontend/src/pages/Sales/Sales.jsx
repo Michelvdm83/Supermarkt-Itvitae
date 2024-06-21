@@ -32,10 +32,10 @@ export default function Sales() {
           } else {
             currentCategory = product.category;
             return (
-              <>
+              <div className="flex flex-col gap-2" key={product.name}>
                 <Banner bannerText={product.category} />
-                <ProductBox key={product.name} product={product} />
-              </>
+                <ProductBox product={product} />
+              </div>
             );
           }
         })}
