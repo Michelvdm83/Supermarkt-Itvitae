@@ -41,12 +41,11 @@ export default function AddProduct() {
 
   return (
     <>
-      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) !== "manager" && (
+      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) !== "manager" ? (
         <div className="my-16 text-2xl">
           <p>U bent niet gemachtigd om deze pagina te bekijken.</p>
         </div>
-      )}
-      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
+      ) : (
         <div className="flex flex-col items-center my-8 text-lg">
           <p>Een product toevoegen:</p>
 

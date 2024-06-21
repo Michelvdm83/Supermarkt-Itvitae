@@ -55,7 +55,7 @@ export default function Account() {
         <div className=" my-4">
           <p className=" font-bold">Hallo Manager</p>
           <button
-            className="bg-gray-400 rounded my-2 p-1"
+            className="bg-nn-green rounded my-2 p-1"
             onClick={() => navigate("/add-product")}
           >
             Voeg een nieuw product toe aan het assortiment
