@@ -22,9 +22,9 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="mt-40 gap-8 flex flex-col">
+    <div className="mt-40 gap-8 flex flex-col w-4/5">
       <Banner bannerText="Beste deals" />
-      <ul className="gap-4 flex">
+      <ul className="gap-4 flex flex-wrap w-full justify-center ">
         {topSales.map((product) => (
           <SmallProductBox key={product.name} product={product} />
         ))}

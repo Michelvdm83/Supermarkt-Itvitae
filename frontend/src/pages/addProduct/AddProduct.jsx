@@ -14,6 +14,9 @@ export default function AddProduct() {
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState();
 
+  const inputfieldCSS =
+    "border-2 pl-2 border-nn-green min-w-fit rounded-2xl focus:outline-none valid:bg-nn-green-faded";
+
   useEffect(getCategories, []);
 
   function getCategories() {
@@ -79,18 +82,20 @@ export default function AddProduct() {
           <p>U bent niet gemachtigd om deze pagina te bekijken.</p>
         </div>
       ) : (
-        <div className="flex flex-col items-center my-8 text-lg">
-          <p>Een product toevoegen:</p>
+        <div className="flex flex-col border-2 rounded-2xl shadow-xl p-4 items-center my-8 text-lg">
+          <p className="text-lg font-medium bg-nn-green mb-4 h-8 px-2 rounded-2xl">
+            Nieuw product
+          </p>
 
           <div className="flex flex-col items-end">
             <div className="flex my-2">
               <p className="mx-2">Naam</p>
               <input
-                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
+                className={inputfieldCSS}
                 type="text"
                 minLength={3}
                 required
-                placeholder="product naam"
+                placeholder="Productnaam"
                 value={name}
                 onChange={(event) => {
                   setName(event.target.value);
@@ -103,11 +108,11 @@ export default function AddProduct() {
             <div className="flex my-2">
               <p className="mx-2">Omschrijving</p>
               <input
-                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
+                className={inputfieldCSS}
                 type="text"
                 minLength={5}
                 required
-                placeholder="product omschrijving"
+                placeholder="Omschrijving"
                 value={description}
                 onChange={(event) => {
                   setDescription(event.target.value);
@@ -120,7 +125,7 @@ export default function AddProduct() {
             <div className="flex my-2">
               <p className="mx-2">Prijs in €</p>
               <input
-                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
+                className={inputfieldCSS}
                 type="number"
                 required
                 min={0.01}
@@ -140,7 +145,7 @@ export default function AddProduct() {
             <div className="flex my-2">
               <p className="mx-2">(optioneel) Aanbiedingsprijs in €</p>
               <input
-                className="border-4 rounded-md focus:outline-none invalid:border-red-700 valid:border-green-700"
+                className={inputfieldCSS}
                 type="number"
                 min={0}
                 step={0.01}
@@ -164,7 +169,7 @@ export default function AddProduct() {
                 }}
                 name="category"
                 id="category"
-                className="w-56"
+                className="w-56 mb-4 border-2 rounded-2xl px-2 border-nn-green"
               >
                 {categories &&
                   categories.map((catagoryOption) => (
@@ -179,13 +184,13 @@ export default function AddProduct() {
 
           {checkValues() ? (
             <button
-              className="bg-nn-green rounded my-2 p-1"
+              className="bg-nn-green shadow-xl rounded-2xl px-2 h-8 font-semibold justify-center items-center"
               onClick={() => handleSubmit()}
             >
               Opslaan
             </button>
           ) : (
-            <p className="text-gray-500 bg-gray-300 rounded my-2 p-1">
+            <p className="bg-nn-green shadow-xl rounded-2xl px-2 h-8 font-semibold justify-center items-center">
               Opslaan
             </p>
           )}

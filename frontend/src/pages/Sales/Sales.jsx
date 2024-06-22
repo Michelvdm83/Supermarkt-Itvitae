@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Banner from "../../components/Banner/Banner.jsx";
 import ProductBox from "../../components/ProductBox/ProductBox.jsx";
+import CategoryBanner from "../../components/Banner/Categorybanner.jsx";
 
 export default function Sales() {
   const [sales, setSales] = useState([]);
@@ -23,7 +24,7 @@ export default function Sales() {
 
   let currentCategory = "";
   return (
-    <div className="w-1/3 flex flex-col justify-center gap-8">
+    <div className="w-1/3 flex flex-col justify-center">
       <Banner bannerText="In de aanbieding" />
       <ul className=" flex flex-col gap-4">
         {sales.map((product) => {
@@ -33,7 +34,7 @@ export default function Sales() {
             currentCategory = product.category;
             return (
               <div className="flex flex-col gap-2" key={product.name}>
-                <Banner bannerText={product.category} />
+                <CategoryBanner bannerText={product.category} />
                 <ProductBox product={product} />
               </div>
             );

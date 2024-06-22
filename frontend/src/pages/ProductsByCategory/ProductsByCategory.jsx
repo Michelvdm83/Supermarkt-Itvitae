@@ -24,7 +24,7 @@ export default function ProductsByCategory() {
   }, []);
 
   return (
-    <div className="w-1/3 flex flex-col justify-center">
+    <div className="w-1/3 flex flex-col justify-center gap-12">
       <Banner bannerText={"In de categorie " + categoryName + ":"} />
       <ul className=" flex flex-col gap-4">
         {productsOfCategory.map((product) => (

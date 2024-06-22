@@ -29,7 +29,7 @@ export default function ProductBox({ product }) {
 
   return (
     <button onClick={() => navigate("/products/" + product.name)}>
-      <div className="min-w-fit border-2 rounded-2xl shadow-xl h-32 gap-8 flex">
+      <div className=" border-2 rounded-2xl shadow-xl h-32 gap-8 flex">
         <div className="my-4 ml-8 w-1/2 flex flex-col justify-center items-start">
           <h3 className="text-lg font-medium m-0  mr-0">{product.name}</h3>
           <p>{product.description}</p>

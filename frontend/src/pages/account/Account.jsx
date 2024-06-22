@@ -75,7 +75,7 @@ export default function Account() {
         {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
           <div className=" my-4">
             <button
-              className="bg-nn-green rounded my-2 p-1"
+              className="bg-nn-green shadow-xl rounded-2xl px-2 h-8 font-semibold justify-center items-center"
               onClick={() => navigate("/add-product")}
             >
               Voeg een nieuw product toe aan het assortiment
