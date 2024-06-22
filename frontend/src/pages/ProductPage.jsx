@@ -70,6 +70,9 @@ export default function ProductPage({ setShoppingcartItems }) {
   };
 
   function deleteProduct() {
+    if (!confirm(product.name + " verwijderen uit assortiment?")) {
+      return;
+    }
     axios
       .delete("http://localhost:8080/api/v1/products/remove/" + product.name, {
         headers: {

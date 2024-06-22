@@ -57,6 +57,7 @@ export default function ShoppingCart({ getShoppingCart }) {
       .then(() => {
         setCartId("");
         setProducts([]);
+        getShoppingCart();
       })
       .catch((error) => {
         alert("Betaling is niet gelukt");

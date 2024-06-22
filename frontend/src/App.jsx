@@ -31,7 +31,11 @@ export default function App() {
           },
         })
         .then((data) => {
-          setShoppingcartItems(data.data.shoppingCartProducts);
+          if (data.data === "") {
+            setShoppingcartItems([]);
+          } else {
+            setShoppingcartItems(data.data.shoppingCartProducts);
+          }
         })
         .catch((error) => {
           console.log(error);

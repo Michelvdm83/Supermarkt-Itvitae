@@ -60,7 +60,9 @@ export default function Account() {
           Uitloggen
         </button>
       </div>
-      <Banner bannerText="Meest gekocht" />
+      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" && (
+        <Banner bannerText="Meest gekocht" />
+      )}
       <div className="flex items-stretch justify-between">
         {mostBought &&
           sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" &&
