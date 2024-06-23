@@ -6,7 +6,16 @@ public record ShoppingCartProductDto(String productName, int quantity, double to
     public static ShoppingCartProductDto from(ShoppingCartProduct shoppingCartProduct) {
         String productName = shoppingCartProduct.getProduct().getName();
         int quantity = shoppingCartProduct.getQuantity();
-        double singlePrice = shoppingCartProduct.getProduct().getPrice();
+        double singlePrice;
+
+        Double salesPrice = shoppingCartProduct.getProduct().getSalesPrice();
+        if (salesPrice == null) {
+            singlePrice = shoppingCartProduct.getProduct().getPrice();
+        } else {
+            singlePrice = salesPrice;
+        }
+
+
         double totalPrice = singlePrice * quantity;
         UUID uuid = shoppingCartProduct.getId();
 

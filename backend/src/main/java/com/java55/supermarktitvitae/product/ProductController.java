@@ -1,6 +1,7 @@
 package com.java55.supermarktitvitae.product;
 
 import com.java55.supermarktitvitae.category.Category;
+import com.java55.supermarktitvitae.shoppingcartproduct.ShoppingCartProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,6 +18,7 @@ import java.util.Optional;
 public class ProductController {
 
     private final ProductRepository productRepository;
+    private final ShoppingCartProductRepository shoppingCartProductRepository;
 
     @GetMapping("/searchbar")
     public List<Product> searchProductByName(@RequestParam String contains) {
@@ -86,6 +88,9 @@ public class ProductController {
         }
 
         var productToDelete = possibleProduct.get();
+        var cartProducts = shoppingCartProductRepository.findByProductAndShoppingCart_IsPayedFalse(productToDelete);
+        shoppingCartProductRepository.deleteAll(cartProducts);
+
         productToDelete.setActive(false);
         productRepository.save(productToDelete);
         return ResponseEntity.noContent().build();

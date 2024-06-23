@@ -60,14 +60,17 @@ export default function Account() {
           Uitloggen
         </button>
       </div>
-      <Banner bannerText="Meest gekocht" />
+      {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" && (
+        <Banner bannerText="Meest gekocht" />
+      )}
       <div className="flex items-stretch justify-between">
         {mostBought &&
           sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "customer" &&
           mostBought.map((product) => (
             <div
+              onClick={() => navigate("/products/" + product.productname)}
               key={product.productname}
-              className="gap-8 border-2 rounded-2xl shadow-xl w-40 h-28 flex justify-center items-center"
+              className="gap-8 border-2 rounded-2xl shadow-xl w-40 h-28 flex justify-center items-center cursor-pointer"
             >
               {product.quantity}x {product.productname}
             </div>

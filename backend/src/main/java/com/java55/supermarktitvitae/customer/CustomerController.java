@@ -64,9 +64,9 @@ public class CustomerController {
 
     @PostMapping("register")
     public ResponseEntity<?> register(@RequestBody Customer newCustomer, UriComponentsBuilder ucb) {
-        
+
         var userName = newCustomer.getEmail();
-        var possibleCustomer = customerRepository.findByEmail(userName);
+        var possibleCustomer = customerRepository.findByEmailIgnoreCase(userName);
 
         if (possibleCustomer.isPresent()) {
             return ResponseEntity

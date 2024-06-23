@@ -87,7 +87,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         return jwtService
                 .readToken(authorization.substring(AUTHORIZATION_HEADER_JWT_PREFIX.length()))
                 .filter(token -> !token.isExpired())
-                .map(token -> customerRepository.findByEmail(token.username()).orElseThrow(RuntimeException::new));
+                .map(token -> customerRepository.findByEmailIgnoreCase(token.username()).orElseThrow(RuntimeException::new));
     }
 
     private Optional<Manager> getManagerFromAuthorizationHeader(String authorization) {
