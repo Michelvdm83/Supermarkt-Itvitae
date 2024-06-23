@@ -103,7 +103,6 @@ public class JwtService {
 
         List<String> parsedRoles = new LinkedList<>();
 
-        rawRoles.forEach(System.out::println);
         for (Object o : rawRoles) {
             if (o instanceof LinkedHashMap<?, ?> map) {
                 map.values().forEach(t -> {

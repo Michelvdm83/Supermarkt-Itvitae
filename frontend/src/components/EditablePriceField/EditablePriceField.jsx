@@ -32,7 +32,19 @@ export default function EditablePriceField({ fieldName, product, setProduct }) {
         parsedPrice = parsedPrice.toFixed(2);
         setPriceEdit(parsedPrice);
       }
-      console.log(parsedPrice);
+
+      if (fieldName === "salesPrice" && parsedPrice !== null) {
+        if (parsedPrice >= product.price) {
+          alert("Aanbieding moet lager zijn dan normale prijs");
+          return;
+        }
+      } else if (
+        product.salesPrice !== null &&
+        parsedPrice <= product.salesPrice
+      ) {
+        alert("Standaard prijs moet hoger zijn dan de aanbieding");
+        return;
+      }
 
       axios
         .patch(

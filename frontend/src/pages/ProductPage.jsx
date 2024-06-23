@@ -70,6 +70,9 @@ export default function ProductPage({ setShoppingcartItems }) {
   };
 
   function deleteProduct() {
+    if (!confirm(product.name + " verwijderen uit assortiment?")) {
+      return;
+    }
     axios
       .delete("http://localhost:8080/api/v1/products/remove/" + product.name, {
         headers: {
@@ -141,7 +144,7 @@ export default function ProductPage({ setShoppingcartItems }) {
                 className="bg-gray-100 w-10 rounded-2xl text-center"
                 type="number"
                 value={quantity}
-                onChange={(e) => setQuantity(e.target.value)}
+                onChange={(e) => setQuantity(Math.round(e.target.value))}
               ></input>
               <button className={buttonCSS} onClick={addProductToCart}>
                 Voeg toe
