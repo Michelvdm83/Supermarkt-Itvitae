@@ -83,7 +83,7 @@ export default function AddProduct() {
         </div>
       ) : (
         <div className="flex flex-col border-2 rounded-2xl shadow-xl p-4 items-center my-8 text-lg">
-          <p className="text-lg font-medium bg-nn-green mb-4 h-8 px-2 rounded-2xl">
+          <p className="text-lg font-medium bg-nn-green w-4/5 flex justify-center mb-4 h-8 px-2 rounded-2xl">
             Nieuw product
           </p>
 
@@ -184,13 +184,13 @@ export default function AddProduct() {
 
           {checkValues() ? (
             <button
-              className="bg-nn-green shadow-xl rounded-2xl px-2 h-8 font-semibold justify-center items-center"
+              className="bg-nn-green shadow-xl text-white rounded-2xl px-2 h-8 font-semibold justify-center items-center"
               onClick={() => handleSubmit()}
             >
               Opslaan
             </button>
           ) : (
-            <p className="bg-nn-green shadow-xl rounded-2xl px-2 h-8 font-semibold justify-center items-center">
+            <p className="bg-nn-green text-white shadow-xl rounded-2xl px-2 h-8 font-semibold justify-center items-center">
               Opslaan
             </p>
           )}
