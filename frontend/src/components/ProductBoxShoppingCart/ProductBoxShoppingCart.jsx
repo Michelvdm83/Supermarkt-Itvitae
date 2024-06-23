@@ -19,7 +19,6 @@ export default function ProductBoxShoppingCart({
       .patch(
         `http://localhost:8080/api/v1/shoppingcarts`,
         {
-          /*UUID shoppingCartId, UUID shoppingCartProductId*/
           shoppingCartId: cartId,
           shoppingCartProductId: product.uuid,
         },

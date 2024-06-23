@@ -16,10 +16,10 @@ import Register from "./pages/customerregistration/Register.jsx";
 import AddProduct from "./pages/addProduct/AddProduct";
 
 export default function App() {
-  const navigate = useNavigate();
-
   const [searchResults, setSearchResults] = useState([]);
   const [shoppingcartItems, setShoppingcartItems] = useState([]);
+
+  const navigate = useNavigate();
 
   const getShoppingCart = () => {
     if (sessionStorage.getItem("ROLE") == "customer") {
@@ -66,8 +66,6 @@ export default function App() {
           path="products/:productName"
           element={<ProductPage setShoppingcartItems={setShoppingcartItems} />}
         />
-        {/* apostrophes cant be ignored in the backend
-        for now the ProductPage URL must contain apostrophes to find "Pinda's" */}
         <Route
           path="/search"
           element={<ProductSearch searchResults={searchResults} />}
@@ -79,7 +77,6 @@ export default function App() {
           element={<ShoppingCart getShoppingCart={getShoppingCart} />}
         />
         <Route path="/register" element={<Register />} />
-        <Route path="/shoppingcart" element={<ShoppingCart />} />
         <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </div>

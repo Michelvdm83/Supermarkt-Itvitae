@@ -11,7 +11,7 @@ export default function NavigationBar({ shoppingcartItems, setSearchResults }) {
       <NavigationBarItem title="Aanbiedingen" page="sales" />
       <SearchBar setSearchResults={setSearchResults} />
       {/*hier logica inloggen/registreren of persoonlijke pagina + 1 of 2 knoppen*/}
-      {sessionStorage.getItem("JWT") ? (
+      {sessionStorage.getItem("JWT") !== null ? (
         <NavigationBarItem title="Account" page="account" />
       ) : (
         <NavigationBarItem title="Inloggen/Registreren" page="login" />
