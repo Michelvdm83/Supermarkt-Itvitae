@@ -8,6 +8,7 @@ export default {
         "nn-green": "#B5E61D",
         "nn-pink": "#FFAEC9",
         "nn-green-faded": "#D2FF6F",
+        "nn-pink-darker": "#E89EB7",
       },
     },
   },
