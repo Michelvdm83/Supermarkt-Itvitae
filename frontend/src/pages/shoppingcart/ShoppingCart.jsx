@@ -67,17 +67,7 @@ export default function ShoppingCart({ getShoppingCart }) {
   return (
     <div className="w-1/3 flex flex-col justify-center">
       <Banner bannerText="In uw winkelmandje" />
-      {products.length > 0 && (
-        <div className=" self-center">
-          <button
-            onClick={checkout}
-            className="text-white bg-nn-green mb-4 rounded-2xl font-extrabold h-10 w-20 mr-2 mt-6 justify-center items-center"
-          >
-            Afrekenen
-          </button>
-        </div>
-      )}
-      <ul className="mt-12 flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 mt-12">
         {products !== null &&
           products.map((product) => (
             <ProductBoxShoppingCart
@@ -89,6 +79,16 @@ export default function ShoppingCart({ getShoppingCart }) {
             />
           ))}
       </ul>
+      {products.length > 0 && (
+        <div className=" self-center">
+          <button
+            onClick={checkout}
+            className="text-white bg-nn-green mt-6 rounded-2xl font-extrabold h-10 w-24 justify-center items-center"
+          >
+            Afrekenen
+          </button>
+        </div>
+      )}
     </div>
   );
 }

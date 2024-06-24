@@ -54,7 +54,7 @@ export default function Account() {
         )}
 
         <button
-          className="mb-4 mx-4 bg-gray-400 rounded m-1 p-1"
+          className="mb-4 mx-4 bg-nn-pink m-1 p-1 text-white shadow-l rounded-2xl px-2 h-8 font-semibold justify-center items-center"
           onClick={logout}
         >
           Uitloggen
@@ -78,7 +78,7 @@ export default function Account() {
         {sessionStorage.getItem(ROLE_STORAGE_LOCATION) === "manager" && (
           <div className=" my-4">
             <button
-              className="bg-nn-green rounded my-2 p-1"
+              className="bg-nn-green shadow-xl text-white rounded-2xl px-2 h-8 font-semibold justify-center items-center"
               onClick={() => navigate("/add-product")}
             >
               Voeg een nieuw product toe aan het assortiment
