@@ -33,8 +33,8 @@ export default function EditablePriceField({ fieldName, product, setProduct }) {
         setPriceEdit(parsedPrice);
       }
 
-      if (fieldName === "salesPrice" && parsedPrice !== null) {
-        if (parsedPrice >= product.price) {
+      if (fieldName === "salesPrice") {
+        if (parsedPrice !== null && parsedPrice >= product.price) {
           alert("Aanbieding moet lager zijn dan normale prijs");
           return;
         }
